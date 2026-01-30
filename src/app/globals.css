@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0b0f;
+  --text: #fff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --card: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.12);
+  --btn-bg: #facc15;
+  --btn-text: #111827;
+  --radius: 18px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root[data-theme="lux"] {
+  --bg: #0b0b0f;
+  --text: #fff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --card: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.12);
+  --btn-bg: #facc15;
+  --btn-text: #111827;
+  --radius: 18px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root[data-theme="candy"] {
+  --bg: #fff1f6;
+  --text: #111827;
+  --muted: rgba(17, 24, 39, 0.7);
+  --card: #fff;
+  --border: rgba(17, 24, 39, 0.1);
+  --btn-bg: #db2777;
+  --btn-text: #fff;
+  --radius: 20px;
+}
+
+:root[data-theme="clean"] {
+  --bg: #f8fafc;
+  --text: #0f172a;
+  --muted: rgba(15, 23, 42, 0.65);
+  --card: #fff;
+  --border: rgba(15, 23, 42, 0.1);
+  --btn-bg: #0ea5e9;
+  --btn-text: #fff;
+  --radius: 16px;
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-fade-in,
+  .anim-floaty {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.anim-fade-up {
+  animation: fade-up 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.anim-fade-in {
+  animation: fade-in 700ms ease both;
+}
+.anim-floaty {
+  animation: floaty 4.5s ease-in-out infinite;
 }

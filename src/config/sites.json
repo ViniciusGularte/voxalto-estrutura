@@ -1,0 +1,21 @@
+{
+  "appDomain": "voxalto.com.br",
+  "defaults": {
+    "revalidateSeconds": 1200
+  },
+  "sites": [
+    {
+      "slug": "ana",
+      "sheetId": "1_t6NFkqxWB_3nhS49zYZAKkNEWfjD-5tSdylYfcUAjo",
+      "revalidateSeconds": 1,
+      "template": "ana",
+      "customDomains": ["anacastro.com.br", "www.anacastro.com.br"]
+    },
+    {
+      "slug": "bruna",
+      "sheetId": "9ZyXWVutSRqPonMLkJIHgFeDCbA9876543210",
+      "revalidateSeconds": 60,
+      "template": "bruna"
+    }
+  ]
+}
