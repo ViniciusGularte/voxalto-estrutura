@@ -598,7 +598,7 @@ export default function Page({ data }: PageProps) {
           <motion.div variants={anim.stagger} initial="hidden" animate="show">
             <motion.div
               variants={anim.fadeUp}
-              className="flex items-start ml-[-40px] mb-[-40px] gap-3"
+              className=" items-start ml-[-40px] mb-[-40px] gap-3 hidden md:flex"
             >
               <img
                 src={brand.logo}
@@ -1236,7 +1236,7 @@ export default function Page({ data }: PageProps) {
                     <button
                       type="button"
                       onClick={() => setOpenFaq(open ? null : i)}
-                      className="w-full text-left px-5 sm:px-6 py-4 flex items-center justify-between gap-4"
+                      className="w-full text-left px-5 sm:px-6 py-4  items-center justify-between gap-4"
                     >
                       <div className="text-sm sm:text-base font-bold text-slate-950">
                         {q}

@@ -6,6 +6,7 @@ import Ana from "@/clients/ana/template";
 import FTPericiasMedicas from "@/clients/ftpericiasmedicas/template";
 import FTPericiasMedicas2 from "@/clients/ftpericiasmedicas2/template";
 import FTPericiasMedicas3 from "@/clients/ftpericiasmedicas3/template";
+import FTPericiasMedicas4 from "@/clients/ftpericiasmedicas4/template";
 import Psicologa from "@/clients/psicologa/template";
 import LayNunes from "@/clients/laynunes/template";
 import Christye from "@/clients/christye/template";
@@ -14,6 +15,8 @@ const TEMPLATES: Record<string, any> = {
   ftpericiasmedicas: FTPericiasMedicas,
   ftpericiasmedicas2: FTPericiasMedicas2,
   ftpericiasmedicas3: FTPericiasMedicas3,
+  ftpericiasmedicas4: FTPericiasMedicas4,
+
   christye: Christye,
   psicologa: Psicologa,
   laynunes: LayNunes,

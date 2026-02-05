@@ -117,7 +117,16 @@ function IconFromName({
     (n.includes("peric") ? Stethoscope : null) ||
     BadgeCheck;
 
-  return <Ico className={className} />;
+  return <Ico className={className} aria-hidden="true" />;
+}
+
+function clamp(n: number, a: number, b: number) {
+  return Math.max(a, Math.min(b, n));
+}
+
+function safeNum(v: any, fallback: number) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : fallback;
 }
 
 export default function Page({ data }: PageProps) {
@@ -126,7 +135,7 @@ export default function Page({ data }: PageProps) {
 
   const container = "mx-auto max-w-6xl px-5 sm:px-6";
   const ease: any = [0.22, 1, 0.36, 1];
-  const dur = reduce ? 0 : 0.6;
+  const dur = reduce ? 0 : 0.55;
 
   const anim = useMemo(() => {
     return {
@@ -135,16 +144,16 @@ export default function Page({ data }: PageProps) {
         show: {
           transition: {
             staggerChildren: reduce ? 0 : 0.07,
-            delayChildren: reduce ? 0 : 0.04,
+            delayChildren: reduce ? 0 : 0.03,
           },
         },
       },
       fadeUp: {
-        hidden: { opacity: 0, y: reduce ? 0 : 14 },
+        hidden: { opacity: 0, y: reduce ? 0 : 12 },
         show: { opacity: 1, y: 0, transition: { duration: dur, ease } },
       },
       pop: {
-        hidden: { opacity: 0, y: reduce ? 0 : 10, scale: reduce ? 1 : 0.985 },
+        hidden: { opacity: 0, y: reduce ? 0 : 10, scale: reduce ? 1 : 0.99 },
         show: {
           opacity: 1,
           y: 0,
@@ -155,7 +164,7 @@ export default function Page({ data }: PageProps) {
     };
   }, [reduce, dur]);
 
-  // ====== BRAND (travado nas cores do logo) ======
+  // ====== BRAND ======
   const brand = {
     logo: c.img("logo_da_empresa", "https://iili.io/fD10Vbj.png"),
 
@@ -165,32 +174,34 @@ export default function Page({ data }: PageProps) {
       "Olá! Quero falar com a FT Perícias sobre um caso.",
     ),
 
+    // HERO: mais simples e direto (idoso lê)
+    hero_titulo: c.cfg(
+      "titulo_principal",
+      "Perícia médica para fortalecer sua prova no processo.",
+    ),
+    palavra_destaque_hero: c.cfg(
+      "palavra_destaque_hero",
+      "fortalecer sua prova",
+    ),
+    hero_subtitulo: c.cfg(
+      "subtitulo_principal",
+      "Laudo e parecer com linguagem clara, técnica e compatível com o Judiciário.",
+    ),
+    hero_subtitulo_2: c.cfg(
+      "subtitulo_principal_2",
+      "Atendimento para advogados e partes, em todo o Brasil.",
+    ),
     texto_botao_hero: c.cfg("texto_botao_hero", "CHAMAR NO WHATSAPP"),
     texto_menor_hero: c.cfg(
       "texto_menor_hero",
-      "Resposta rápida. Atendimento direto.",
+      "Canal oficial. Envie o resumo do caso e documentos disponíveis.",
     ),
 
-    hero_titulo: c.cfg(
-      "titulo_principal",
-      "Perícia médica com rigor técnico e linguagem adequada ao processo.",
-    ),
-    palavra_destaque_hero: c.cfg("palavra_destaque_hero", "rigor técnico"),
-    hero_texto: c.cfg(
-      "texto_principal",
-      "Laudos, pareceres e assistência técnica para decisões seguras em ações cíveis, trabalhistas e previdenciárias.",
-    ),
-    hero_texto_2: c.cfg(
-      "texto_principal_2",
-      "Atendimento para advogados, empresas e pessoas físicas em todo o Brasil.",
-    ),
-
-    // Fundo abstrato/clean (você pode trocar por uma textura abstrata)
     hero_fundo: c.img(
       "imagem_fundo_topo",
       "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=2200&q=80",
     ),
-    hero_fundo_opacidade: c.cfg("opacidade_fundo_topo", "0.08"),
+    hero_fundo_opacidade: c.cfg("opacidade_fundo_topo", "0.06"),
 
     cor_primaria: c.cfg("cor_primaria_hex", "#001e36"),
     cor_secundaria: c.cfg("cor_secundaria_hex", "#8d7a5f"),
@@ -208,23 +219,23 @@ export default function Page({ data }: PageProps) {
     brand.palavra_destaque_hero,
   );
 
-  // ====== TOP PROOF (simples, sem “marquee”) ======
+  // ====== PROOF ======
   const proofRaw = (c.tab("destaques_topo") || []) as any[];
   const proofFallback = [
     { icone: "brasil", titulo: "Atuação em todo o Brasil" },
-    { icone: "prazos", titulo: "Prazos definidos e previsibilidade" },
+    { icone: "prazos", titulo: "Prazos definidos no alinhamento" },
     { icone: "jurídico", titulo: "Linguagem adequada ao processo" },
-    { icone: "laudos", titulo: "Laudos e pareceres fundamentados" },
+    { icone: "segurança", titulo: "Sigilo e cuidado com documentos" },
   ];
   const proof = (proofRaw.length ? proofRaw : proofFallback) as any[];
 
-  // ====== SERVIÇOS (única seção) ======
-  const servicosRaw = (c.tab("servicos_principais") || []) as any[];
-  const servicosFallback = [
+  // ====== “TRILHA” (serviços) — impressiona sem complicar ======
+  const trilhaRaw = (c.tab("servicos_principais") || []) as any[];
+  const trilhaFallback = [
     {
       icone: "laudos",
       titulo: "Laudos e pareceres",
-      descricao: "Documentos claros, objetivos e tecnicamente fundamentados.",
+      descricao: "Documento técnico com estrutura clara e conclusão objetiva.",
     },
     {
       icone: "processo",
@@ -235,51 +246,39 @@ export default function Page({ data }: PageProps) {
     {
       icone: "quesitos",
       titulo: "Quesitos e impugnações",
-      descricao: "Elaboração de quesitos e contestação técnica quando cabível.",
+      descricao:
+        "Formulação de quesitos e contestação técnica quando aplicável.",
     },
     {
       icone: "assistência",
       titulo: "Assistência técnica pericial",
       descricao:
-        "Acompanhamento do caso do início ao fim, com suporte ao processo.",
-    },
-    {
-      icone: "jurídico",
-      titulo: "Parecer para sustentar teses",
-      descricao:
-        "Suporte técnico para reforçar argumentos com base médica consistente.",
-    },
-    {
-      icone: "rigor",
-      titulo: "Casos de alta complexidade",
-      descricao:
-        "Consultoria aprofundada para decisões seguras e documentadas.",
+        "Acompanhamento do caso com suporte médico-jurídico ao processo.",
     },
   ];
-  const servicos = (
-    servicosRaw.length ? servicosRaw : servicosFallback
-  ) as any[];
+  const trilha = (trilhaRaw.length ? trilhaRaw : trilhaFallback) as any[];
 
-  // ====== COMO FUNCIONA (3 passos) ======
+  // ====== COMO FUNCIONA (curto e direto) ======
   const como = {
     rotulo: c.cfg("rotulo_como_funciona", "Como funciona"),
-    titulo: c.cfg("titulo_como_funciona", "Fluxo simples, sem ruído"),
+    titulo: c.cfg("titulo_como_funciona", "Três passos, sem complicação"),
     passos: ((c.tab("como_funciona") || []) as any[]).length
       ? ((c.tab("como_funciona") || []) as any[])
       : [
           {
-            titulo: "Envie o resumo do caso",
-            texto:
-              "WhatsApp com contexto, prazos, documentos e objetivo do trabalho.",
+            titulo: "1) Envie o caso",
+            texto: "WhatsApp com resumo do caso, objetivo, prazo e documentos.",
+            icone: "atendimento",
           },
           {
-            titulo: "Alinhamento técnico e escopo",
+            titulo: "2) Alinhamos escopo e prazo",
             texto: "Confirmamos viabilidade, tipo de entrega e prazo estimado.",
+            icone: "processo",
           },
           {
-            titulo: "Entrega do material",
-            texto:
-              "Laudo/parecer com estrutura clara e linguagem compatível com o processo.",
+            titulo: "3) Entrega do material",
+            texto: "Laudo/parecer claro, técnico e compatível com o processo.",
+            icone: "laudos",
           },
         ],
   };
@@ -298,27 +297,27 @@ export default function Page({ data }: PageProps) {
             {
               pergunta: "Como funciona o primeiro contato?",
               resposta:
-                "Você chama no WhatsApp, explica o caso e alinhamos orientação inicial e próximos passos.",
+                "Você chama no WhatsApp, envia um resumo do caso e os documentos que tiver. A gente orienta o que é essencial e alinha os próximos passos.",
             },
             {
               pergunta: "Vocês atendem em todo o Brasil?",
               resposta:
-                "Sim. Atuamos em todo o Brasil, de forma remota e presencial quando necessário.",
+                "Sim. Atendemos em todo o Brasil. Remoto na maioria dos casos, presencial quando necessário.",
             },
             {
               pergunta: "Quais documentos preciso enviar?",
               resposta:
-                "Em geral: prontuários, exames, relatórios, petição e laudo pericial (se houver).",
+                "Em geral: prontuários, exames, relatórios, petição e laudo pericial (se houver). Na triagem, informamos o que é mais importante no seu caso.",
             },
             {
               pergunta: "Vocês fazem quesitos e impugnação?",
               resposta:
-                "Sim. Auxiliamos na elaboração de quesitos e na contestação técnica quando aplicável.",
+                "Sim. Elaboramos quesitos e fazemos contestação técnica quando aplicável.",
             },
           ],
   };
 
-  // ====== RESPONSÁVEL TÉCNICO (apenas no final) ======
+  // ====== RESPONSÁVEL ======
   const responsavel = {
     rotulo: c.cfg("rotulo_responsavel", "Responsável técnico"),
     nome: c.cfg("nome_responsavel", "Fábio Tonin"),
@@ -347,7 +346,7 @@ export default function Page({ data }: PageProps) {
     ),
   };
 
-  // ====== FOOTER (exatamente como você pediu) ======
+  // ====== FOOTER ======
   const footer = {
     whatsapp_label: c.cfg("texto_footer_whatsapp", "WhatsApp"),
     instagram_label: c.cfg("texto_footer_instagram", "Instagram"),
@@ -372,6 +371,8 @@ export default function Page({ data }: PageProps) {
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
+  const heroOpacity = clamp(safeNum(brand.hero_fundo_opacidade, 0.06), 0, 0.18);
+
   return (
     <div
       className={cx(
@@ -387,31 +388,72 @@ export default function Page({ data }: PageProps) {
       }
     >
       <style>{`
-        .card {
-          border-radius: 16px;
-          border: 1px solid rgba(15, 23, 42, 0.10);
-          box-shadow: 0 16px 55px rgba(2, 6, 23, 0.06);
-          background: #ffffff;
+        :root{
+          --radius: 18px;
+          --stroke: rgba(15,23,42,.12);
+          --strokeSoft: rgba(15,23,42,.08);
+          --shadow: 0 12px 35px rgba(2,6,23,.06);
+          --shadowHero: 0 26px 90px rgba(0,0,0,.26);
+          --lineHero: rgba(255,255,255,.14);
+          --lineHero2: rgba(255,255,255,.10);
         }
-        .cardSoft {
-          border-radius: 16px;
-          border: 1px solid rgba(15, 23, 42, 0.10);
-          background: rgba(255,255,255,0.70);
-          backdrop-filter: blur(10px);
+        .surface{
+          border-radius: var(--radius);
+          border: 1px solid var(--stroke);
+          background: #fff;
+          box-shadow: var(--shadow);
         }
-        .btnPrimary {
+        .surfaceFlat{
+          border-radius: var(--radius);
+          border: 1px solid var(--stroke);
+          background: #fff;
+        }
+        .btnPrimary{
           background: var(--deep);
           color: #fff;
+          border-radius: 999px;
         }
-        .btnPrimary:hover { filter: brightness(0.95); }
-        .btnGhost {
-          border: 1px solid rgba(255,255,255,0.22);
-          background: rgba(255,255,255,0.10);
+        .btnPrimary:hover{ filter: brightness(.96); }
+        .btnGhost{
+          border: 1px solid rgba(255,255,255,.22);
+          background: rgba(255,255,255,.08);
           color: #fff;
+          border-radius: 999px;
+        }
+        .btnGhost:hover{ background: rgba(255,255,255,.10); }
+        .hFont{
+          letter-spacing: -0.02em;
+        }
+        .chipHero{
+          border-radius: 999px;
+          border: 1px solid rgba(255,255,255,.16);
+          background: rgba(255,255,255,.08);
+          color: rgba(255,255,255,.86);
+        }
+        .trailWrap{
+          position: relative;
+        }
+        .trailLine{
+          position: absolute;
+          left: 17px;
+          top: 10px;
+          bottom: 10px;
+          width: 2px;
+          background: rgba(15,23,42,.10);
+        }
+        @media (min-width: 1024px){
+          .trailLine{
+            left: 22px;
+          }
+        }
+        a:focus-visible, button:focus-visible{
+          outline: 2px solid rgba(141,122,95,.55);
+          outline-offset: 3px;
+          border-radius: 14px;
         }
       `}</style>
 
-      {/* HERO (novo layout) */}
+      {/* HERO (impacto, sem card lateral) */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[color:var(--deep)]" />
@@ -419,26 +461,25 @@ export default function Page({ data }: PageProps) {
             src={brand.hero_fundo}
             alt={c.cfg("texto_alt_fundo_topo", "Imagem de fundo")}
             className="absolute inset-0 h-full w-full object-cover"
-            style={{ opacity: Number(brand.hero_fundo_opacidade || 0.08) }}
+            style={{ opacity: heroOpacity }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--deep)] via-[color:var(--deep)] to-[#071523]" />
-          {/* abstrato simples */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute -top-32 -left-32 h-[520px] w-[520px] rounded-full bg-[color:var(--gold)]/25 blur-3xl" />
-            <div className="absolute -bottom-44 -right-44 h-[620px] w-[620px] rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-[color:var(--gold)]/14 blur-3xl" />
+            <div className="absolute -bottom-40 -right-40 h-[560px] w-[560px] rounded-full bg-white/8 blur-3xl" />
           </div>
         </div>
 
         <div
-          className={cx(container, "relative pt-10 sm:pt-12 pb-10 sm:pb-12")}
+          className={cx(container, "relative pt-10 sm:pt-12 pb-12 sm:pb-14")}
         >
           <motion.div variants={anim.stagger} initial="hidden" animate="show">
-            {/* Header */}
+            {/* Header: mantém lógica do logo (grande só no desktop). No mobile, some e fica só CTA */}
             <motion.div
               variants={anim.fadeUp}
-              className="flex items-center justify-between gap-4"
+              className="flex items-start justify-between gap-4"
             >
-              <div className="flex items-start ml-[-40px] mb-[-40px] gap-3 hidden md:flex">
+              <div className="hidden md:flex items-start ml-[-40px] mb-[-40px] gap-3">
                 <img
                   src={brand.logo}
                   alt={c.cfg("texto_alt_logo", "Logo")}
@@ -446,9 +487,10 @@ export default function Page({ data }: PageProps) {
                 />
               </div>
 
+              {/* Mobile: só botão (mais limpo e sem “logo perdido”) */}
               <a
                 href={waPrimary}
-                className="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold btnGhost"
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold btnGhost"
               >
                 <WhatsAppIcon className="h-4 w-4" />
                 <span>{c.cfg("texto_botao_topo", "WhatsApp")}</span>
@@ -456,167 +498,100 @@ export default function Page({ data }: PageProps) {
               </a>
             </motion.div>
 
-            {/* Main */}
-            <div className="mt-10 grid lg:grid-cols-12 gap-8 items-start">
-              <motion.div variants={anim.fadeUp} className="lg:col-span-7">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-3 py-1 text-[11px] font-bold tracking-[0.20em] text-white/85">
+            {/* Copy central e grande (idoso lê) */}
+            <div className="mt-10 sm:mt-12 max-w-3xl">
+              <motion.div variants={anim.fadeUp}>
+                <div className="inline-flex items-center gap-2 px-3 py-1 text-[11px] font-bold tracking-[0.18em] chipHero">
                   {c.cfg(
                     "rotulo_hero",
                     "PERÍCIAS MÉDICAS E ASSISTÊNCIA TÉCNICA",
                   )}
                 </div>
+              </motion.div>
 
-                <h1 className="mt-4 text-[38px] sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] text-white">
-                  {heroPieces.map((p, i) => (
-                    <span
-                      key={i}
-                      className={p.emph ? "text-[color:var(--gold)]" : ""}
-                    >
-                      {p.t}
-                    </span>
-                  ))}
-                </h1>
-
-                <p className="mt-5 text-[15px] leading-[26px] text-white/85 max-w-2xl">
-                  {brand.hero_texto}
-                </p>
-                <p className="mt-3 text-[15px] leading-[26px] text-white/80 max-w-2xl">
-                  {brand.hero_texto_2}
-                </p>
-
-                <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <a
-                    href={waPrimary}
-                    className="inline-flex items-center justify-center gap-3 rounded-full px-6 py-3 text-sm font-black btnPrimary shadow-[0_18px_55px_rgba(0,0,0,0.25)]"
+              <motion.h1
+                variants={anim.fadeUp}
+                className="mt-4 hFont text-[40px] sm:text-5xl lg:text-6xl font-black leading-[1.05] text-white"
+              >
+                {heroPieces.map((p, i) => (
+                  <span
+                    key={i}
+                    className={p.emph ? "text-[color:var(--gold)]" : ""}
                   >
-                    <WhatsAppIcon className="h-5 w-5" />
-                    <span>{brand.texto_botao_hero}</span>
-                    <ArrowRight className="h-4 w-4 opacity-90" />
-                  </a>
-                  <div className="text-xs text-white/70">
-                    {brand.texto_menor_hero}
-                  </div>
+                    {p.t}
+                  </span>
+                ))}
+              </motion.h1>
+
+              <motion.p
+                variants={anim.fadeUp}
+                className="mt-5 text-[18px] leading-[30px] text-white/85"
+              >
+                {brand.hero_subtitulo}
+              </motion.p>
+
+              <motion.p
+                variants={anim.fadeUp}
+                className="mt-3 text-[18px] leading-[30px] text-white/78"
+              >
+                {brand.hero_subtitulo_2}
+              </motion.p>
+
+              <motion.div variants={anim.fadeUp} className="mt-7">
+                <a
+                  href={waPrimary}
+                  className="inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-[15px] font-black btnPrimary shadow-[0_18px_55px_rgba(0,0,0,0.22)]"
+                >
+                  <WhatsAppIcon className="h-5 w-5" />
+                  <span>{brand.texto_botao_hero}</span>
+                  <ArrowRight className="h-4 w-4 opacity-90" />
+                </a>
+                <div className="mt-3 text-sm text-white/70">
+                  {brand.texto_menor_hero}
                 </div>
               </motion.div>
 
-              {/* Side contact card (conversão) */}
-              <motion.div variants={anim.pop} className="lg:col-span-5">
-                <div className="rounded-3xl bg-white/10 border border-white/15 backdrop-blur-xl overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.25)]">
-                  <div className="p-6 sm:p-7">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="text-sm font-extrabold text-white">
-                          {c.cfg(
-                            "titulo_box_hero",
-                            "Envie o caso e receba orientação inicial",
-                          )}
-                        </div>
-                        <div className="mt-1 text-[13px] leading-[20px] text-white/75">
-                          {c.cfg(
-                            "texto_box_hero",
-                            "WhatsApp direto com a equipe. Sem intermediários.",
-                          )}
-                        </div>
-                      </div>
-                      <div className="h-10 w-10 rounded-2xl bg-[color:var(--gold)]/20 border border-[color:var(--gold)]/25 grid place-items-center">
-                        <MessageCircle className="h-4 w-4 text-[color:var(--gold)]" />
-                      </div>
-                    </div>
-
-                    <div className="mt-5 rounded-2xl bg-white/8 border border-white/12 p-4">
-                      <div className="text-xs font-bold tracking-[0.18em] text-white/70">
-                        {c.cfg("rotulo_lista_box_hero", "O QUE ENVIAR")}
-                      </div>
-
-                      <div className="mt-3 space-y-2">
-                        {(((c.tab("checklist_whatsapp") as any[]) || []).length
-                          ? (c.tab("checklist_whatsapp") as any[]) || []
-                          : [
-                              { t: "Contexto e objetivo do trabalho" },
-                              { t: "Prontuários, exames e relatórios" },
-                              { t: "Petição e laudo (se houver)" },
-                            ]
-                        ).map((it: any, idx: number) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <div className="mt-0.5 h-5 w-5 rounded-full bg-white/10 border border-white/12 grid place-items-center">
-                              <BadgeCheck className="h-3.5 w-3.5 text-[color:var(--gold)]" />
-                            </div>
-                            <div className="text-[13px] leading-[20px] text-white/80">
-                              {c.col(it, "t", it?.t || "Item")}
-                            </div>
+              {/* Provas (grandes e fáceis de ler) */}
+              <motion.div variants={anim.fadeUp} className="mt-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {proof.slice(0, 4).map((it, i) => {
+                    const titulo = c.col(
+                      it,
+                      "titulo",
+                      proofFallback[i]?.titulo || "Destaque",
+                    );
+                    const icon = c.col(
+                      it,
+                      "icone",
+                      proofFallback[i]?.icone || "segurança",
+                    );
+                    return (
+                      <div
+                        key={i}
+                        className="rounded-2xl border border-white/12 bg-white/6 px-4 py-4"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="h-10 w-10 rounded-xl border border-white/12 bg-white/8 grid place-items-center">
+                            <IconFromName
+                              name={icon}
+                              className="h-5 w-5 text-[color:var(--gold)]"
+                            />
                           </div>
-                        ))}
+                          <div className="text-[15px] font-semibold text-white/90 leading-snug">
+                            {titulo}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-
-                    <a
-                      href={waPrimary}
-                      className="mt-5 inline-flex w-full items-center justify-center gap-3 rounded-2xl px-5 py-3 text-sm font-black text-white"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, var(--gold), rgba(141,122,95,0.75))",
-                      }}
-                    >
-                      <WhatsAppIcon className="h-5 w-5" />
-                      <span>
-                        {c.cfg("texto_botao_box_hero", "CHAMAR NO WHATSAPP")}
-                      </span>
-                      <ArrowRight className="h-4 w-4 opacity-90" />
-                    </a>
-
-                    <div className="mt-3 text-xs text-white/65">
-                      {c.cfg(
-                        "texto_mini_box_hero",
-                        "Atuação em todo o Brasil. Prazos definidos no alinhamento.",
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="h-2 w-full bg-[color:var(--gold)]/70" />
+                    );
+                  })}
                 </div>
               </motion.div>
             </div>
-
-            {/* Proof bar (simples) */}
-            <motion.div variants={anim.fadeUp} className="mt-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {proof.slice(0, 4).map((it, i) => {
-                  const titulo = c.col(
-                    it,
-                    "titulo",
-                    proofFallback[i]?.titulo || "Destaque",
-                  );
-                  const icon = c.col(
-                    it,
-                    "icone",
-                    proofFallback[i]?.icone || "segurança",
-                  );
-                  return (
-                    <div
-                      key={i}
-                      className="rounded-2xl bg-white/8 border border-white/12 px-4 py-3"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-xl bg-white/10 border border-white/12 grid place-items-center">
-                          <IconFromName
-                            name={icon}
-                            className="h-4 w-4 text-[color:var(--gold)]"
-                          />
-                        </div>
-                        <div className="text-xs font-semibold text-white/85 leading-snug">
-                          {titulo}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* SERVIÇOS (único bloco) */}
+      {/* TRILHA (serviços) — efeito “wow” mas simples */}
       <section className="py-16 sm:py-20 bg-white">
         <div className={container}>
           <motion.div
@@ -633,85 +608,118 @@ export default function Page({ data }: PageProps) {
                     .toUpperCase()}
                 </span>
               </div>
-              <h2 className="mt-5 text-3xl sm:text-4xl font-black tracking-tight text-slate-950">
+              <h2 className="mt-5 hFont text-3xl sm:text-4xl font-black tracking-tight text-slate-950">
                 {c.cfg(
                   "titulo_servicos_principais",
-                  "Entregas técnicas, claras e úteis para o processo.",
+                  "Entregas técnicas, sem ruído.",
                 )}
               </h2>
-              <p className="mt-4 text-[15px] leading-[26px] text-slate-700">
+              <p className="mt-4 text-[18px] leading-[30px] text-slate-700">
                 {c.cfg(
                   "texto_servicos_principais",
-                  "Selecione o tipo de entrega e alinhamos escopo e prazo no primeiro contato.",
+                  "Você escolhe o tipo de entrega. A gente alinha escopo e prazo no primeiro contato.",
                 )}
               </p>
             </motion.div>
 
-            <motion.div
-              variants={anim.stagger}
-              className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            >
-              {servicos.map((it, i) => {
-                const titulo = c.col(
-                  it,
-                  "titulo",
-                  servicosFallback[i]?.titulo || "Serviço",
-                );
-                const desc = c.col(
-                  it,
-                  "descricao",
-                  servicosFallback[i]?.descricao || "",
-                );
-                const icon = c.col(
-                  it,
-                  "icone",
-                  servicosFallback[i]?.icone || "laudos",
-                );
-                return (
-                  <motion.div
-                    key={i}
-                    variants={anim.pop}
-                    whileHover={reduce ? undefined : { y: -6 }}
-                    className="card p-6"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div
-                        className="h-11 w-11 rounded-xl grid place-items-center text-white shadow-[0_14px_40px_rgba(0,30,54,0.16)]"
-                        style={{ background: "var(--deep)" }}
-                      >
-                        <IconFromName name={icon} className="h-5 w-5" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-base font-extrabold text-slate-950">
-                          {titulo}
-                        </div>
-                        <div className="mt-2 text-[13px] leading-[22px] text-slate-700">
-                          {desc}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-
             <motion.div variants={anim.fadeUp} className="mt-10">
-              <a
-                href={waPrimary}
-                className="inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-black btnPrimary shadow-[0_18px_50px_rgba(0,30,54,0.18)]"
-              >
-                <WhatsAppIcon className="h-5 w-5" />
-                <span>
-                  {c.cfg("texto_botao_servicos", "CHAMAR NO WHATSAPP")}
-                </span>
-                <ArrowRight className="h-4 w-4 opacity-90" />
-              </a>
+              <div className="trailWrap">
+                <div className="trailLine" />
+                <div className="space-y-4">
+                  {trilha.slice(0, 6).map((it, idx) => {
+                    const titulo = c.col(it, "titulo", `Serviço ${idx + 1}`);
+                    const desc = c.col(it, "descricao", "");
+                    const icon = c.col(it, "icone", "laudos");
+
+                    return (
+                      <motion.div
+                        key={idx}
+                        variants={anim.pop}
+                        className="grid grid-cols-[40px_1fr] sm:grid-cols-[48px_1fr] gap-4 items-start"
+                      >
+                        <div className="relative flex justify-center">
+                          {/* Linha vertical */}
+                          <div className="absolute top-0 bottom-0 w-[2px] bg-slate-200" />
+
+                          <div className="relative z-10 mt-5 h-9 w-9 sm:h-10 sm:w-10 rounded-2xl bg-[color:var(--deep)] border border-slate-200 shadow-[0_10px_30px_rgba(0,30,54,0.18)] grid place-items-center">
+                            <IconFromName
+                              name={icon}
+                              className="h-5 w-5 text-white z-10"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Card */}
+                        <div className="surfaceFlat p-6">
+                          <div className="flex items-start justify-between gap-4">
+                            <div>
+                              <div className="text-[18px] font-extrabold text-slate-950">
+                                {titulo}
+                              </div>
+                              <div className="mt-2 text-[16px] leading-[28px] text-slate-700">
+                                {desc}
+                              </div>
+                            </div>
+
+                            <div className="hidden sm:flex items-center gap-2 text-[12px] font-bold text-slate-600">
+                              <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1">
+                                Etapa {String(idx + 1).padStart(2, "0")}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Micro “ficha” (ajuda conversão, idoso entende) */}
+                          <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                              <div className="text-[12px] font-bold text-slate-600">
+                                Formato
+                              </div>
+                              <div className="text-[14px] font-semibold text-slate-900">
+                                PDF
+                              </div>
+                            </div>
+                            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                              <div className="text-[12px] font-bold text-slate-600">
+                                Prazo
+                              </div>
+                              <div className="text-[14px] font-semibold text-slate-900">
+                                Definido no alinhamento
+                              </div>
+                            </div>
+                            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                              <div className="text-[12px] font-bold text-slate-600">
+                                Linguagem
+                              </div>
+                              <div className="text-[14px] font-semibold text-slate-900">
+                                Médico-jurídica
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mt-10">
+                <a
+                  href={waPrimary}
+                  className="inline-flex items-center gap-3 rounded-full px-7 py-4 text-[15px] font-black btnPrimary shadow-[0_18px_50px_rgba(0,30,54,0.14)]"
+                >
+                  <WhatsAppIcon className="h-5 w-5" />
+                  <span>
+                    {c.cfg("texto_botao_servicos", "CHAMAR NO WHATSAPP")}
+                  </span>
+                  <ArrowRight className="h-4 w-4 opacity-90" />
+                </a>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* COMO FUNCIONA (novo) */}
+      {/* COMO FUNCIONA (trilha horizontal simples) */}
       <section className="py-16 sm:py-20 bg-slate-50">
         <div className={container}>
           <motion.div
@@ -726,7 +734,7 @@ export default function Page({ data }: PageProps) {
                   {como.rotulo.toUpperCase()}
                 </span>
               </div>
-              <h2 className="mt-5 text-3xl sm:text-4xl font-black tracking-tight text-slate-950">
+              <h2 className="mt-5 hFont text-3xl sm:text-4xl font-black tracking-tight text-slate-950">
                 {como.titulo}
               </h2>
             </motion.div>
@@ -738,19 +746,34 @@ export default function Page({ data }: PageProps) {
               {como.passos.slice(0, 3).map((it: any, idx: number) => {
                 const t = c.col(it, "titulo", `Passo ${idx + 1}`);
                 const a = c.col(it, "texto", "");
+                const icon = c.col(
+                  it,
+                  "icone",
+                  idx === 0 ? "atendimento" : idx === 1 ? "processo" : "laudos",
+                );
+
                 return (
                   <motion.div
                     key={idx}
                     variants={anim.pop}
-                    className="card p-6"
+                    className="surfaceFlat p-6"
                   >
-                    <div className="text-xs font-black tracking-[0.20em] text-[color:var(--gold)]">
-                      {String(idx + 1).padStart(2, "0")}
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="text-[12px] font-black tracking-[0.18em] text-[color:var(--gold)]">
+                        {String(idx + 1).padStart(2, "0")}
+                      </div>
+                      <div className="h-10 w-10 rounded-xl border border-slate-200 bg-white grid place-items-center">
+                        <IconFromName
+                          name={icon}
+                          className="h-5 w-5 text-[color:var(--gold)]"
+                        />
+                      </div>
                     </div>
-                    <div className="mt-2 text-base font-extrabold text-slate-950">
+
+                    <div className="mt-3 text-[18px] font-extrabold text-slate-950">
                       {t}
                     </div>
-                    <div className="mt-2 text-[13px] leading-[22px] text-slate-700">
+                    <div className="mt-2 text-[16px] leading-[28px] text-slate-700">
                       {a}
                     </div>
                   </motion.div>
@@ -761,7 +784,7 @@ export default function Page({ data }: PageProps) {
         </div>
       </section>
 
-      {/* FAQ (clean) */}
+      {/* FAQ (grande, legível) */}
       <section className="py-16 sm:py-20 bg-white">
         <div className={container}>
           <motion.div
@@ -776,7 +799,7 @@ export default function Page({ data }: PageProps) {
                   {faq.rotulo.toUpperCase()}
                 </span>
               </div>
-              <h2 className="mt-5 text-3xl sm:text-4xl font-black tracking-tight text-slate-950">
+              <h2 className="mt-5 hFont text-3xl sm:text-4xl font-black tracking-tight text-slate-950">
                 {faq.titulo}
               </h2>
             </motion.div>
@@ -794,20 +817,21 @@ export default function Page({ data }: PageProps) {
                   <motion.div
                     key={i}
                     variants={anim.pop}
-                    className="card overflow-hidden"
+                    className="surfaceFlat overflow-hidden"
                   >
                     <button
                       type="button"
                       onClick={() => setOpenFaq(open ? null : i)}
-                      className="w-full text-left px-5 sm:px-6 py-4 flex items-center justify-between gap-4"
+                      className="w-full text-left px-5 sm:px-6 py-5 flex items-center justify-between gap-4"
+                      aria-expanded={open}
                     >
-                      <div className="text-sm sm:text-base font-extrabold text-slate-950">
+                      <div className="text-[16px] sm:text-[18px] font-extrabold text-slate-950">
                         {q}
                       </div>
-                      <div className="h-9 w-9 rounded-full bg-slate-50 border border-slate-200 grid place-items-center">
+                      <div className="h-10 w-10 rounded-full bg-slate-50 border border-slate-200 grid place-items-center">
                         <ChevronDown
                           className={cx(
-                            "h-4 w-4 text-slate-700 transition-transform",
+                            "h-5 w-5 text-slate-700 transition-transform",
                             open && "rotate-180",
                           )}
                         />
@@ -830,10 +854,10 @@ export default function Page({ data }: PageProps) {
                           exit={
                             reduce ? { opacity: 0 } : { opacity: 0, height: 0 }
                           }
-                          transition={{ duration: reduce ? 0 : 0.25, ease }}
-                          className="px-5 sm:px-6 pb-4"
+                          transition={{ duration: reduce ? 0 : 0.22, ease }}
+                          className="px-5 sm:px-6 pb-6"
                         >
-                          <div className="text-[15px] leading-[26px] text-slate-700">
+                          <div className="text-[16px] leading-[28px] text-slate-700">
                             {a}
                           </div>
                         </motion.div>
@@ -844,10 +868,10 @@ export default function Page({ data }: PageProps) {
               })}
             </motion.div>
 
-            <motion.div variants={anim.fadeUp} className="mt-8">
+            <motion.div variants={anim.fadeUp} className="mt-10">
               <a
                 href={waPrimary}
-                className="inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-black btnPrimary shadow-[0_18px_50px_rgba(0,30,54,0.18)]"
+                className="inline-flex items-center gap-3 rounded-full px-7 py-4 text-[15px] font-black btnPrimary shadow-[0_18px_50px_rgba(0,30,54,0.14)]"
               >
                 <WhatsAppIcon className="h-5 w-5" />
                 <span>{c.cfg("texto_botao_faq", "CHAMAR NO WHATSAPP")}</span>
@@ -870,13 +894,13 @@ export default function Page({ data }: PageProps) {
           >
             <motion.h2
               variants={anim.fadeUp}
-              className="text-3xl sm:text-4xl font-black tracking-tight text-white"
+              className="hFont text-3xl sm:text-4xl font-black tracking-tight text-white"
             >
               {finalCta.titulo}
             </motion.h2>
             <motion.p
               variants={anim.fadeUp}
-              className="mt-4 text-[15px] leading-[26px] text-white/80"
+              className="mt-4 text-[18px] leading-[30px] text-white/80"
             >
               {finalCta.texto}
             </motion.p>
@@ -886,7 +910,7 @@ export default function Page({ data }: PageProps) {
               href={buildWaLink(waBase, finalCta.mensagem_botao)}
               whileHover={reduce ? undefined : { y: -2 }}
               whileTap={reduce ? undefined : { scale: 0.99 }}
-              className="mt-7 inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-black text-white shadow-[0_18px_55px_rgba(0,0,0,0.22)]"
+              className="mt-7 inline-flex items-center gap-3 rounded-full px-7 py-4 text-[15px] font-black text-white shadow-[0_18px_55px_rgba(0,0,0,0.22)]"
               style={{
                 background:
                   "linear-gradient(135deg, var(--gold), rgba(141,122,95,0.75))",
@@ -900,7 +924,7 @@ export default function Page({ data }: PageProps) {
         </div>
       </section>
 
-      {/* Responsável técnico (somente aqui) */}
+      {/* Responsável técnico (simples) */}
       <section className="py-14 sm:py-16 bg-white">
         <div className={container}>
           <motion.div
@@ -919,7 +943,7 @@ export default function Page({ data }: PageProps) {
 
             <motion.div
               variants={anim.pop}
-              className="mt-6 card overflow-hidden"
+              className="mt-6 surface overflow-hidden"
             >
               <div className="grid lg:grid-cols-12 gap-0 items-stretch">
                 <div className="lg:col-span-4 p-6 sm:p-8 flex items-center justify-center">
@@ -931,7 +955,8 @@ export default function Page({ data }: PageProps) {
                           "texto_alt_foto_responsavel",
                           "Foto do responsável técnico",
                         )}
-                        className="sm:h-72 w-64 sm:w-80 object-cover"
+                        className="h-72 w-64 sm:w-80 object-cover"
+                        loading="lazy"
                       />
                     </div>
                   </div>
@@ -941,10 +966,10 @@ export default function Page({ data }: PageProps) {
                   <div className="text-2xl sm:text-3xl font-black tracking-tight text-slate-950">
                     {responsavel.nome}
                   </div>
-                  <div className="mt-2 text-sm font-semibold text-[color:var(--gold)]">
+                  <div className="mt-2 text-[16px] font-semibold text-[color:var(--gold)]">
                     {responsavel.credenciais}
                   </div>
-                  <p className="mt-5 text-[15px] leading-[26px] text-slate-700 max-w-2xl">
+                  <p className="mt-5 text-[16px] leading-[28px] text-slate-700 max-w-2xl">
                     {responsavel.texto}
                   </p>
                 </div>
@@ -954,13 +979,13 @@ export default function Page({ data }: PageProps) {
         </div>
       </section>
 
-      {/* Footer do jeito que você listou */}
+      {/* Footer */}
       <footer className="bg-white">
         <div className={cx(container, "py-12")}>
           <div className="grid md:grid-cols-4 gap-3">
             <a
               href={buildWaLink(waBase, brand.mensagem_whatsapp)}
-              className="cardSoft px-4 py-3 flex items-center gap-3 hover:bg-white/80"
+              className="surfaceFlat px-4 py-4 flex items-center gap-3 hover:bg-slate-50"
             >
               <div className="h-10 w-10 rounded-xl bg-slate-50 border border-slate-200 grid place-items-center">
                 <Phone className="h-4 w-4 text-[color:var(--gold)]" />
@@ -969,7 +994,7 @@ export default function Page({ data }: PageProps) {
                 <div className="text-xs font-semibold text-slate-600">
                   {footer.whatsapp_label}
                 </div>
-                <div className="text-[15px] font-bold text-slate-900">
+                <div className="text-[16px] font-bold text-slate-900">
                   {footer.whatsapp_display}
                 </div>
               </div>
@@ -979,7 +1004,7 @@ export default function Page({ data }: PageProps) {
               href={instagramHref}
               target="_blank"
               rel="noreferrer"
-              className="cardSoft px-4 py-3 flex items-center gap-3 hover:bg-white/80"
+              className="surfaceFlat px-4 py-4 flex items-center gap-3 hover:bg-slate-50"
             >
               <div className="h-10 w-10 rounded-xl bg-slate-50 border border-slate-200 grid place-items-center">
                 <Instagram className="h-4 w-4 text-[color:var(--gold)]" />
@@ -988,13 +1013,13 @@ export default function Page({ data }: PageProps) {
                 <div className="text-xs font-semibold text-slate-600">
                   {footer.instagram_label}
                 </div>
-                <div className="text-[15px] font-bold text-slate-900">
+                <div className="text-[16px] font-bold text-slate-900">
                   {footer.instagram}
                 </div>
               </div>
             </a>
 
-            <div className="cardSoft px-4 py-3 flex items-center gap-3">
+            <div className="surfaceFlat px-4 py-4 flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-slate-50 border border-slate-200 grid place-items-center">
                 <Building2 className="h-4 w-4 text-[color:var(--gold)]" />
               </div>
@@ -1002,13 +1027,13 @@ export default function Page({ data }: PageProps) {
                 <div className="text-xs font-semibold text-slate-600">
                   {footer.localidade_label}
                 </div>
-                <div className="text-[15px] font-bold text-slate-900">
+                <div className="text-[16px] font-bold text-slate-900">
                   {footer.localidade}
                 </div>
               </div>
             </div>
 
-            <div className="cardSoft px-4 py-3 flex items-center gap-3">
+            <div className="surfaceFlat px-4 py-4 flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-slate-50 border border-slate-200 grid place-items-center">
                 <IdCard className="h-4 w-4 text-[color:var(--gold)]" />
               </div>
@@ -1016,7 +1041,7 @@ export default function Page({ data }: PageProps) {
                 <div className="text-xs font-semibold text-slate-600">
                   {footer.cnpj_label}
                 </div>
-                <div className="text-[15px] font-bold text-slate-900">
+                <div className="text-[16px] font-bold text-slate-900">
                   {footer.cnpj}
                 </div>
               </div>
@@ -1040,7 +1065,7 @@ export default function Page({ data }: PageProps) {
         <motion.div
           whileHover={reduce ? undefined : { y: -3 }}
           whileTap={reduce ? undefined : { scale: 0.98 }}
-          className="h-14 w-14 rounded-full text-white shadow-[0_18px_60px_rgba(0,30,54,0.25)] border border-[color:var(--gold)]/25 flex items-center justify-center"
+          className="h-14 w-14 rounded-full text-white shadow-[0_18px_60px_rgba(0,30,54,0.22)] border border-[color:var(--gold)]/25 flex items-center justify-center"
           style={{ background: "var(--deep)" }}
         >
           <WhatsAppIcon className="h-7 w-7" />

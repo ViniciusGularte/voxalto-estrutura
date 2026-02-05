@@ -528,7 +528,7 @@ export default function Page({ data }: PageProps) {
               variants={anim.fadeUp}
               className="flex items-center justify-between gap-4"
             >
-              <div className="flex items-start ml-[-40px] mb-[-40px] gap-3">
+              <div className="flex items-start ml-[-40px] mb-[-40px] gap-3 hidden md:flex">
                 <img
                   src={brand.logo}
                   alt={c.cfg("texto_alt_logo", "Logo")}
