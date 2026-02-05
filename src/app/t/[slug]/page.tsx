@@ -8,12 +8,13 @@ import FTPericiasMedicas2 from "@/clients/ftpericiasmedicas2/template";
 import FTPericiasMedicas3 from "@/clients/ftpericiasmedicas3/template";
 import Psicologa from "@/clients/psicologa/template";
 import LayNunes from "@/clients/laynunes/template";
+import Christye from "@/clients/christye/template";
 const TEMPLATES: Record<string, any> = {
   ana: Ana,
   ftpericiasmedicas: FTPericiasMedicas,
   ftpericiasmedicas2: FTPericiasMedicas2,
   ftpericiasmedicas3: FTPericiasMedicas3,
-
+  christye: Christye,
   psicologa: Psicologa,
   laynunes: LayNunes,
 };

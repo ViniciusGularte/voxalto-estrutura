@@ -59,6 +59,13 @@
       "customDomains": ["laynunes.com.br", "www.laynunes.com.br"]
     },
     {
+      "slug": "christye",
+      "sheetId": "323232",
+      "revalidateSeconds": 1,
+      "template": "christye",
+      "customDomains": ["christye.com.br", "www.christye.com.br"]
+    },
+    {
       "slug": "bruna",
       "sheetId": "9ZyXWVutSRqPonMLkJIHgFeDCbA9876543210",
       "revalidateSeconds": 60,

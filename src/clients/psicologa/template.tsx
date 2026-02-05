@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { makeCtx } from "@/ui/ctx";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, cubicBezier } from "framer-motion";
 import {
   CalendarClock,
   MessageCircle,
@@ -229,14 +229,14 @@ export default function Page({ data }: PageProps) {
     hidden: motionOn
       ? { opacity: 0, y: 14, filter: "blur(8px)" }
       : { opacity: 1, y: 0, filter: "blur(0px)" },
-    show: motionOn
-      ? {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          transition: { duration: 0.78, ease: [0.22, 1, 0.36, 1] },
-        }
-      : undefined,
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: motionOn
+        ? { duration: 0.78, ease: cubicBezier(0.22, 1, 0.36, 1) }
+        : undefined,
+    },
   };
 
   return (

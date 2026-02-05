@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, cubicBezier } from "framer-motion";
 import {
   CheckCircle2,
   Sparkles,
@@ -208,7 +209,7 @@ export default function Page({ data }: PageProps) {
       y: 0,
       transition: reduce
         ? { duration: 0 }
-        : { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+        : { duration: 0.55, ease: cubicBezier(0.22, 1, 0.36, 1) },
     },
   };
 
@@ -219,7 +220,7 @@ export default function Page({ data }: PageProps) {
       x: 0,
       transition: reduce
         ? { duration: 0 }
-        : { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+        : { duration: 0.6, ease: cubicBezier(0.22, 1, 0.36, 1) },
     },
   };
 
@@ -230,7 +231,7 @@ export default function Page({ data }: PageProps) {
       x: 0,
       transition: reduce
         ? { duration: 0 }
-        : { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+        : { duration: 0.6, ease: cubicBezier(0.22, 1, 0.36, 1) },
     },
   };
 

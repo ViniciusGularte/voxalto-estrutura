@@ -5,7 +5,6 @@
   "scripts": {
     "gen:sheet": "node scripts/gen-sheet-from-template.mjs",
     "dev": "next dev",
-    "prebuild": "pnpm gen:blocks",
     "build": "next build",
     "start": "next start"
   },
