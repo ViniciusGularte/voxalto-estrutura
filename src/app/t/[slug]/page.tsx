@@ -3,9 +3,19 @@ import { resolveBySlug } from "@/lib/sites";
 import { loadSiteData } from "@/lib/sheets";
 
 import Ana from "@/clients/ana/template";
-
+import FTPericiasMedicas from "@/clients/ftpericiasmedicas/template";
+import FTPericiasMedicas2 from "@/clients/ftpericiasmedicas2/template";
+import FTPericiasMedicas3 from "@/clients/ftpericiasmedicas3/template";
+import Psicologa from "@/clients/psicologa/template";
+import LayNunes from "@/clients/laynunes/template";
 const TEMPLATES: Record<string, any> = {
   ana: Ana,
+  ftpericiasmedicas: FTPericiasMedicas,
+  ftpericiasmedicas2: FTPericiasMedicas2,
+  ftpericiasmedicas3: FTPericiasMedicas3,
+
+  psicologa: Psicologa,
+  laynunes: LayNunes,
 };
 
 export default async function ClientSite({

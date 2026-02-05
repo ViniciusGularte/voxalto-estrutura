@@ -12,6 +12,53 @@
       "customDomains": ["anacastro.com.br", "www.anacastro.com.br"]
     },
     {
+      "slug": "ftpericiasmedicas",
+      "sheetId": "teste",
+      "revalidateSeconds": 1,
+      "template": "ftpericiasmedicas",
+      "customDomains": [
+        "ftpericiasmedicas.com.br",
+        "www.ftpericiasmedicas.com.br"
+      ]
+    },
+    {
+      "slug": "ftpericiasmedicas2",
+      "sheetId": "teste",
+      "revalidateSeconds": 1,
+      "template": "ftpericiasmedicas2",
+      "customDomains": [
+        "ftpericiasmedicas.com.br",
+        "www.ftpericiasmedicas.com.br"
+      ]
+    },
+    {
+      "slug": "ftpericiasmedicas3",
+      "sheetId": "teste",
+      "revalidateSeconds": 1,
+      "template": "ftpericiasmedicas3",
+      "customDomains": [
+        "ftpericiasmedicas.com.br",
+        "www.ftpericiasmedicas.com.br"
+      ]
+    },
+    {
+      "slug": "psicologa",
+      "sheetId": "323232",
+      "revalidateSeconds": 1,
+      "template": "psicologa",
+      "customDomains": [
+        "ftpericiasmedicas.com.br",
+        "www.ftpericiasmedicas.com.br"
+      ]
+    },
+    {
+      "slug": "laynunes",
+      "sheetId": "323232",
+      "revalidateSeconds": 1,
+      "template": "laynunes",
+      "customDomains": ["laynunes.com.br", "www.laynunes.com.br"]
+    },
+    {
       "slug": "bruna",
       "sheetId": "9ZyXWVutSRqPonMLkJIHgFeDCbA9876543210",
       "revalidateSeconds": 60,
