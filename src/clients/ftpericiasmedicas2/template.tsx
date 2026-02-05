@@ -330,10 +330,7 @@ export default function Page({ data }: PageProps) {
       "bio_responsavel",
       "Atuação em perícias e pareceres com foco em rigor técnico, clareza e aderência às exigências médico-jurídicas.",
     ),
-    foto: c.img(
-      "foto_responsavel",
-      "https://media.canva.com/v2/image-resize/format:PNG/height:800/quality:100/uri:ifs%3A%2F%2FM%2F879cc1f2-e660-4a1b-9a7e-f65a2a96e933/watermark:F/width:583?csig=AAAAAAAAAAAAAAAAAAAAAFPM6Zudrq-shuLw84dBCm-_WMbtU994DYoodeE4xbLh&exp=1770278356&osig=AAAAAAAAAAAAAAAAAAAAAIqX1NRkx-cHpE6p3L24ZSelcVToj2vHEy7lNUi3j-EN&signer=media-rpc&x-canva-quality=screen",
-    ),
+    foto: c.img("foto_responsavel", "https://iili.io/fDr0eeI.png"),
   };
 
   // ====== CTA FINAL ======
