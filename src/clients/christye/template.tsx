@@ -522,7 +522,7 @@ export default function Page(_props: PageProps) {
   const ease = useMotionEase(reduce);
 
   // Links
-  const instagram = "https://www.instagram.com/christyebiagio/";
+  const instagram = "https://www.instagram.com/christyebiagio.dh";
   const courseLink =
     "https://chk.eduzz.com/801EPYZNW7?utm_source=ig&utm_medium=social&utm_content=link_in_bio";
 
