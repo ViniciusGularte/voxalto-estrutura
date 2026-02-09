@@ -165,22 +165,22 @@ export default function Page({ data }: PageProps) {
     whatsapp: c.cfg("whatsapp_link", "https://wa.me/556792287408"),
     mensagem_whatsapp: c.cfg(
       "mensagem_whatsapp",
-      "Olá! Quero falar com a FT Perícias Médicas e Assistência Técnica sobre um caso.",
+      "Olá! Quero enviar um caso e entender como a FT pode atuar como assistência técnica médica.",
     ),
 
-    rotulo_hero: c.cfg("rotulo_hero", "PERÍCIAS MÉDICAS E ASSISTÊNCIA TÉCNICA"),
+    rotulo_hero: c.cfg("rotulo_hero", "PERÍCIA MÉDICA • ASSISTÊNCIA TÉCNICA"),
     hero_titulo: c.cfg(
       "titulo_principal",
-      "Precisão técnica e rigor científico para definir o rumo do seu processo.",
+      "Precisão técnica e rigor científico para sustentar a tese do seu processo.",
     ),
     palavra_destaque_hero: c.cfg("palavra_destaque_hero", "rigor científico"),
     hero_texto: c.cfg(
       "texto_principal",
-      "Na FT Perícias Médicas e Assistência Técnica, transformamos a complexidade médica em prova técnica robusta, com suporte estratégico nas principais esferas do Direito.",
+      "Transformamos a complexidade médica em prova técnica utilizável no processo — com leitura crítica, fundamentação e direção estratégica ao lado do advogado.",
     ),
     hero_texto_2: c.cfg(
       "texto_principal_2",
-      "O objetivo é simples: decisões baseadas em fatos, não em suposições.",
+      "Objetivo: reduzir risco, evitar suposições e sustentar decisões com fatos.",
     ),
 
     texto_botao_hero: c.cfg("texto_botao_hero", "FALAR COM O PERITO MÉDICO"),
@@ -213,10 +213,11 @@ export default function Page({ data }: PageProps) {
   const destaquesTopoRaw = (c.tab("destaques_topo") || []) as any[];
   const destaquesTopoFallback = [
     { icone: "brasil", titulo: "Atuação em todo o Brasil" },
-    { icone: "ciência", titulo: "Pareceres de alta complexidade" },
+    { icone: "ciência", titulo: "Pareceres com alta complexidade" },
     { icone: "jurídico", titulo: "Suporte em múltiplas esferas do Direito" },
-    { icone: "prazos", titulo: "Resposta e alinhamento objetivos" },
+    { icone: "prazos", titulo: "Alinhamento objetivo e previsibilidade" },
   ];
+
   const destaquesTopo = (
     destaquesTopoRaw.length ? destaquesTopoRaw : destaquesTopoFallback
   ) as any[];
@@ -225,25 +226,24 @@ export default function Page({ data }: PageProps) {
     rotulo: c.cfg("rotulo_alerta", "Atenção"),
     titulo: c.cfg(
       "titulo_alerta",
-      "O risco de seguir sem suporte técnico é alto.",
+      "O risco de seguir sem acompanhamento técnico é alto.",
     ),
     texto: c.cfg(
       "texto_alerta",
-      "Um laudo judicial frágil, quesitos genéricos ou a falta de uma análise crítica de viabilidade podem comprometer anos de trabalho em um processo.",
+      "Laudo mal fundamentado, quesitos genéricos e ausência de leitura crítica de viabilidade podem comprometer anos de estratégia processual.",
     ),
     texto_2: c.cfg(
       "texto_alerta_2",
-      "Na prática, o laudo pericial costuma pesar muito na decisão. Você vai deixar o destino da sua causa apenas nas mãos do perito judicial — ou ter ao lado um parceiro técnico para sustentar a verdade médica?",
+      "Na prática, o laudo pericial pesa — e muitas vezes direciona a decisão. Você vai depender apenas do perito judicial, ou ter um braço técnico para sustentar a verdade médica no processo?",
     ),
   };
 
-  const servicosRaw = (c.tab("servicos_principais") || []) as any[];
   const servicosFallback = [
     {
       icone: "jurídico",
       titulo: "Perícias Cíveis (Erro Médico)",
       descricao:
-        "Análise minuciosa de prontuários e condutas para identificar nexo causal, inconsistências ou ausência de culpa.",
+        "Análise criteriosa de prontuários, condutas e nexo causal para sustentar tese, identificar inconsistências e reduzir vulnerabilidades técnicas.",
       imagem:
         "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1800&q=80",
     },
@@ -251,7 +251,7 @@ export default function Page({ data }: PageProps) {
       icone: "laudos",
       titulo: "Perícias Previdenciárias",
       descricao:
-        "Avaliação de incapacidade laboral e condições clínicas relacionadas à concessão de benefícios e revisões.",
+        "Avaliação técnica de incapacidade e condições clínicas relacionadas a benefícios, revisões e controvérsias médico-legais.",
       imagem:
         "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1800&q=80",
     },
@@ -259,7 +259,7 @@ export default function Page({ data }: PageProps) {
       icone: "processo",
       titulo: "Perícias Trabalhistas",
       descricao:
-        "Foco em incapacidade, nexo técnico, doenças ocupacionais e documentação clínica pertinente ao caso.",
+        "Suporte em incapacidade, nexo técnico, doenças ocupacionais e documentação clínica — com foco no que importa para o processo.",
       imagem:
         "https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1800&q=80",
     },
@@ -267,7 +267,7 @@ export default function Page({ data }: PageProps) {
       icone: "perícia",
       titulo: "Perícias Criminais",
       descricao:
-        "Suporte médico-legal em casos que exigem leitura técnica cuidadosa e fundamentação robusta.",
+        "Leitura médico-legal cuidadosa, fundamentação robusta e apoio técnico em casos sensíveis e de alta responsabilidade.",
       imagem:
         "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1800&q=80",
     },
@@ -275,7 +275,7 @@ export default function Page({ data }: PageProps) {
       icone: "assistência",
       titulo: "Assistência Técnica",
       descricao:
-        "Atuação ao lado do advogado para reduzir ruído técnico e fortalecer o conjunto probatório.",
+        "Atuação estratégica ao lado do advogado para orientar o caso, reduzir ruído técnico e fortalecer o conjunto probatório.",
       imagem:
         "https://images.unsplash.com/photo-1554224154-22dec7ec8818?auto=format&fit=crop&w=1800&q=80",
     },
@@ -283,11 +283,13 @@ export default function Page({ data }: PageProps) {
       icone: "segurança",
       titulo: "Inteligência Técnica do Caso",
       descricao:
-        "Análises de alta complexidade para orientar estratégia, riscos e caminhos de sustentação técnica.",
+        "Análises de alta complexidade para mapear riscos, fragilidades e caminhos técnicos de sustentação com previsibilidade.",
       imagem:
         "https://images.unsplash.com/photo-1570929057588-6952f7dd2305?auto=format&fit=crop&w=1800&q=80",
     },
   ];
+
+  const servicosRaw = (c.tab("servicos_principais") || []) as any[];
   const servicos = (
     servicosRaw.length ? servicosRaw : servicosFallback
   ) as any[];
@@ -298,37 +300,37 @@ export default function Page({ data }: PageProps) {
       icone: "processo",
       titulo: "Análise de Viabilidade",
       texto:
-        "Leitura técnica dos pontos críticos, indicando riscos, fragilidades e oportunidades de condução do caso.",
+        "Leitura técnica dos pontos críticos do caso para indicar riscos, inconsistências e linhas seguras de condução.",
     },
     {
       icone: "laudos",
       titulo: "Parecer Médico-Legal",
       texto:
-        "Documentos claros, bem estruturados e fundamentados em literatura e prática pericial.",
+        "Documento claro, estruturado e defensável: fundamentação, coerência e linguagem médico-jurídica utilizável no processo.",
     },
     {
       icone: "assistência",
       titulo: "Acompanhamento Pericial",
       texto:
-        "Suporte desde a preparação até o pós-perícia, garantindo aderência a protocolos e coerência técnica.",
+        "Suporte antes, durante e após a perícia para garantir aderência a protocolos e consistência técnica do exame.",
     },
     {
       icone: "rigor",
       titulo: "Contestação de Laudos",
       texto:
-        "Identificação de lacunas, equívocos e inconsistências em laudos desfavoráveis, com resposta técnica objetiva.",
+        "Identificação objetiva de lacunas, equívocos e contradições em laudos desfavoráveis — com resposta técnica direcionada.",
     },
     {
       icone: "quesitos",
       titulo: "Formulação de Quesitos",
       texto:
-        "Quesitos precisos e estratégicos para direcionar o exame aos pontos realmente relevantes do processo.",
+        "Quesitos precisos e estratégicos para forçar o enfrentamento dos pontos técnicos realmente relevantes do processo.",
     },
     {
       icone: "jurídico",
       titulo: "Orientação Técnica ao Advogado",
       texto:
-        "Apoio na interpretação de documentos médicos e preparo técnico para audiências e estratégia processual.",
+        "Tradução do ‘mediquês’, leitura de documentos e apoio técnico para audiência, estratégia e tomada de decisão.",
     },
   ];
   const inteligencia = (
@@ -382,19 +384,19 @@ export default function Page({ data }: PageProps) {
       icone: "jurídico",
       titulo: "Visão Estratégica",
       texto:
-        "Não é só descrever medicina: é aplicar a medicina ao objetivo jurídico do caso.",
+        "Não é só medicina: é aplicar a medicina ao objetivo jurídico do caso, com foco em prova e sustentação.",
     },
     {
       icone: "prazos",
       titulo: "Agilidade e Prazos",
       texto:
-        "Entendemos a dinâmica do Judiciário e entregamos com previsibilidade para não estourar prazos.",
+        "Entendemos a dinâmica do Judiciário. Entregas com previsibilidade para você não ficar refém de prazo processual.",
     },
     {
       icone: "ciência",
-      titulo: "Linguagem Acessível",
+      titulo: "Clareza que o Juiz Usa",
       texto:
-        "Traduzimos o técnico para termos que advogados e juízes conseguem usar na decisão.",
+        "Estrutura, linguagem e argumentos técnicos que advogados e magistrados conseguem utilizar com segurança na decisão.",
     },
   ];
   const diferenciais = (
