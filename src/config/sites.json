@@ -52,6 +52,16 @@
       ]
     },
     {
+      "slug": "ftpericiasmedicas5",
+      "sheetId": "teste",
+      "revalidateSeconds": 1,
+      "template": "ftpericiasmedicas5",
+      "customDomains": [
+        "ftpericiasmedicas.com.br",
+        "www.ftpericiasmedicas.com.br"
+      ]
+    },
+    {
       "slug": "psicologa",
       "sheetId": "323232",
       "revalidateSeconds": 1,
