@@ -543,7 +543,7 @@ export default function Page({ data }: PageProps) {
   const nomeCliente = c.cfg("nome_cliente", "Christye Biagio");
   const tituloCliente = c.cfg(
     "titulo_cliente",
-    "Psicóloga • Consultoria Corporativa",
+    "Terapeuta • CRP 06/126864",
   );
 
   const linkInstagram = c.link(
@@ -558,8 +558,9 @@ export default function Page({ data }: PageProps) {
 
   const linkBaseWhatsApp = c.wa(
     "whatsapp_contato",
-    "https://wa.me/556792287408",
+    "https://wa.me/5519996527253",
   );
+  const numeroWhatsApp = c.cfg("whatsapp_display", "+55 19 99652-7253");
 
   const mensagemPadraoWhatsApp = c.cfg(
     "whatsapp_mensagem_padrao",
@@ -613,7 +614,7 @@ export default function Page({ data }: PageProps) {
   const servicosFallback = [
     {
       grupo: "principal",
-      titulo: "Psicoterapia Individual",
+      titulo: "Terapia Individual",
       descricao:
         "Acompanhamento para ansiedade, estresse e desenvolvimento emocional. Sessões presenciais e online.",
       detalhes:
@@ -685,7 +686,7 @@ export default function Page({ data }: PageProps) {
     {
       texto:
         "A forma de conduzir as sessões me ajudou a organizar pensamentos e colocar limites. Foi um divisor de águas para a minha rotina e minhas relações.",
-      meta: "Avaliação anônima • Psicoterapia",
+      meta: "Avaliação anônima • Terapia",
     },
     {
       texto:
@@ -727,15 +728,15 @@ export default function Page({ data }: PageProps) {
   const paragrafosSobreFallback = [
     {
       texto:
-        "Profissional com experiência consolidada em Psicologia Organizacional, Desenvolvimento Humano e Gestão de Pessoas.",
+        "Profissional com experiência consolidada em desenvolvimento humano, relações organizacionais e gestão de pessoas.",
     },
     {
       texto:
-        "Atua com propósito em formar profissionais, desenvolver talentos e transformar ambientes por meio da educação, psicologia e liderança humanizada.",
+        "Atua com propósito em formar profissionais, desenvolver talentos e transformar ambientes por meio da educação, do cuidado terapêutico e da liderança humanizada.",
     },
     {
       texto:
-        "Possui experiência clínica com psicoterapia, orientação vocacional e processos de avaliação, ampliando sensibilidade para ler pessoas e contextos com profundidade.",
+        "Possui experiência clínica com terapia, orientação vocacional e processos de avaliação, ampliando sensibilidade para ler pessoas e contextos com profundidade.",
     },
   ];
 
@@ -985,14 +986,14 @@ export default function Page({ data }: PageProps) {
                   <h1 className="mt-4 font-serif text-4xl font-black leading-[1.02] tracking-tight text-[#1F1A17] sm:text-5xl">
                     {c.cfg(
                       "hero_titulo",
-                      "Psicologia com profundidade, clareza e direção prática.",
+                      "Terapia com profundidade, clareza e direção prática.",
                     )}
                   </h1>
 
                   <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[rgba(31,26,23,0.80)] sm:text-base">
                     {c.cfg(
                       "hero_descricao",
-                      "Profissional com mais de 15 anos de experiência em Psicologia Organizacional, Desenvolvimento Humano e Gestão de Pessoas. Atuação clínica e consultoria corporativa com foco em evolução emocional e performance saudável.",
+                      "Profissional com mais de 15 anos de experiência em desenvolvimento humano, relações organizacionais e gestão de pessoas. Atuação clínica e consultoria corporativa com foco em evolução emocional e performance saudável.",
                     )}
                   </p>
 
@@ -1661,6 +1662,9 @@ export default function Page({ data }: PageProps) {
                     {c.cfg("rodape_botao_whatsapp", "Falar no WhatsApp")}
                   </span>
                 </Button>
+                <p className="mt-3 text-sm font-extrabold tracking-tight text-[rgba(31,26,23,0.66)]">
+                  {numeroWhatsApp}
+                </p>
               </div>
             </div>
           </div>
