@@ -541,10 +541,7 @@ export default function Page({ data }: PageProps) {
   const easing = useMotionEase(reduzirAnimacoes);
 
   const nomeCliente = c.cfg("nome_cliente", "Christye Biagio");
-  const tituloCliente = c.cfg(
-    "titulo_cliente",
-    "Terapeuta • CRP 06/126864",
-  );
+  const tituloCliente = c.cfg("titulo_cliente", "Terapeuta");
 
   const linkInstagram = c.link(
     "link_instagram",
