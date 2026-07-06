@@ -119,6 +119,18 @@ body {
   transition: width 0.25s ease;
 }
 
+.wheel-slider {
+  border-left: 4px solid var(--wheel-color);
+}
+
+.wheel-slider input[type="range"] {
+  cursor: pointer;
+}
+
+.wheel-chart {
+  overflow: visible;
+}
+
 .question-card {
   animation: questionIn 0.25s ease both;
 }
