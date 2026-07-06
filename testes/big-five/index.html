@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Big Five | Christye Biagio</title>
+    <meta name="description" content="Teste Big Five de Christye Biagio." />
+    <link rel="icon" href="/clients/christye/assets/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/christye.css" />
+  </head>
+  <body class="test-page" data-test="big-five">
+    <header data-header class="fixed left-0 right-0 top-0 z-40 transition-all duration-300">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-8">
+        <a href="/" class="leading-tight" aria-label="Voltar para Christye Biagio">
+          <span class="font-hand block text-3xl text-[#243b78]">Christye Biagio</span>
+          <span class="block text-[11px] font-bold uppercase tracking-[0.24em] text-[#243b78]">Terapia · Clinica · Corporativo</span>
+        </a>
+        <a href="/" class="btn hidden rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-[#223873] ring-1 ring-[#e7def2] md:inline-flex">Voltar</a>
+      </div>
+    </header>
+
+    <main class="test-shell px-5 pb-20 pt-36 lg:px-8">
+      <section class="soft-shadow relative mx-auto grid w-full max-w-5xl gap-8 rounded-3xl border border-[#e7def2] bg-white p-6 md:p-8 lg:grid-cols-[0.82fr_0.18fr]">
+        <div class="reveal">
+          <p data-test-eyebrow class="text-xs font-extrabold uppercase tracking-[0.26em] text-[#8052c6]"></p>
+          <h1 data-test-title class="mt-4 font-serif text-[clamp(2.6rem,6vw,5.2rem)] font-semibold leading-none text-[#17213f]"></h1>
+          <p data-test-intro class="mt-6 max-w-[18rem] text-lg leading-8 text-[#526079] md:max-w-2xl"></p>
+        </div>
+        <aside class="soft-shadow reveal h-fit rounded-2xl border border-[#e7def2] bg-white p-5">
+          <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-[#8052c6]">Progresso</p>
+          <p data-progress class="mt-2 font-serif text-4xl font-semibold text-[#223873]">0/0</p>
+        </aside>
+      </section>
+
+      <form id="test-form" class="mx-auto mt-8 grid w-full max-w-5xl gap-5 md:mt-10"></form>
+
+      <section id="loading-state" class="mx-auto mt-12 hidden max-w-3xl text-center">
+        <div class="soft-shadow rounded-[1.5rem] bg-white p-8">
+          <div class="mx-auto h-14 w-14 animate-spin rounded-full border-4 border-[#e6ddec] border-t-[#8052c6]"></div>
+          <p class="mt-5 font-serif text-3xl font-semibold text-[#17213f]">Preparando seu resultado</p>
+        </div>
+      </section>
+
+      <section id="result-section" class="mx-auto mt-12 hidden max-w-6xl">
+        <div id="result-card"></div>
+      </section>
+    </main>
+
+    <div id="lead-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-[#17213f]/60 px-5 backdrop-blur-sm">
+      <div class="soft-shadow w-full max-w-md rounded-[1.35rem] bg-white p-6">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.22em] text-[#8052c6]">Liberar resultado</p>
+            <h2 class="mt-2 font-serif text-3xl font-semibold text-[#17213f]">Para onde enviamos?</h2>
+          </div>
+          <button data-close-modal type="button" class="rounded-full bg-[#f0e6fb] px-3 py-1 text-xl font-bold text-[#223873]">×</button>
+        </div>
+        <form id="lead-form" class="mt-6 grid gap-4">
+          <label class="grid gap-2 text-sm font-bold text-[#526079]">
+            Nome
+            <input id="lead-name" required class="rounded-2xl border border-[#e6ddec] px-4 py-3 text-[#17213f] outline-none focus:border-[#8052c6]" autocomplete="name" />
+          </label>
+          <label class="grid gap-2 text-sm font-bold text-[#526079]">
+            WhatsApp
+            <input id="lead-phone" required minlength="10" inputmode="tel" class="rounded-2xl border border-[#e6ddec] px-4 py-3 text-[#17213f] outline-none focus:border-[#8052c6]" autocomplete="tel" />
+          </label>
+          <button class="btn mt-2 rounded-2xl bg-[#8052c6] px-6 py-4 text-sm font-extrabold text-white" type="submit">Receber resultado</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="/assets/christye.js"></script>
+  </body>
+</html>
