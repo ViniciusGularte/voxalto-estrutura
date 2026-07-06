@@ -6,33 +6,38 @@ const GOOGLE_SHEETS_WEB_APP_URL =
 const TESTS = {
   "roda-emocional": {
     title: "Roda Emocional",
-    eyebrow: "Roda da inteligência emocional",
+    landingTitle: "Ganhe uma análise gratuita",
+    landingIntro:
+      "Responda a uma avaliação simples e descubra quais pontos do seu emocional estão mais fortes, quais pedem cuidado e quais próximos passos podem ajudar.",
+    eyebrow: "Como está seu emocional hoje",
     intro:
-      "Avalie competências de 1 a 10 e escolha um plano de ação simples para evoluir.",
+      "Dê uma nota de 1 a 10 para cada ponto e veja quais áreas precisam de mais cuidado.",
     mode: "wheel",
     competencies: [
-      ["autoconsciencia", "Autoconsciência emocional", "Autoconhecimento", "#0b2d67"],
-      ["autoavaliacao", "Autoavaliação correta", "Autoconhecimento", "#0b2d67"],
-      ["autoconfianca", "Autoconfiança", "Autoconhecimento", "#0b2d67"],
-      ["autocontrole", "Autocontrole", "Autogerenciamento", "#0f8b92"],
-      ["confiabilidade", "Confiabilidade", "Autogerenciamento", "#0f8b92"],
-      ["consciencia", "Consciência organizacional", "Autogerenciamento", "#0f8b92"],
+      ["autoconsciencia", "Entender o que estou sentindo", "Olhar para mim", "#0b2d67"],
+      ["autoavaliacao", "Perceber meus pontos fortes e dificuldades", "Olhar para mim", "#0b2d67"],
+      ["autoconfianca", "Confiar mais em mim", "Olhar para mim", "#0b2d67"],
+      ["autocontrole", "Lidar melhor com minhas reações", "Cuidar das atitudes", "#0f8b92"],
+      ["confiabilidade", "Cumprir o que combino", "Cuidar das atitudes", "#0f8b92"],
+      ["consciencia", "Entender o ambiente ao meu redor", "Cuidar das atitudes", "#0f8b92"],
       ["foco", "Foco", "Motivação", "#8d22a8"],
       ["iniciativa", "Iniciativa", "Motivação", "#8d22a8"],
-      ["realizacao", "Orientação de realização", "Motivação", "#8d22a8"],
-      ["comunicacao", "Comunicação eficaz", "Gerenciamento do outro", "#f45b00"],
-      ["lideranca", "Liderança e influência", "Gerenciamento do outro", "#f45b00"],
-      ["empatia", "Empatia", "Gerenciamento do outro", "#1264c8"],
+      ["realizacao", "Terminar o que começo", "Motivação", "#8d22a8"],
+      ["comunicacao", "Falar com clareza", "Relações", "#f45b00"],
+      ["lideranca", "Influenciar pessoas de forma positiva", "Relações", "#f45b00"],
+      ["empatia", "Entender o lado do outro", "Relações", "#1264c8"],
     ],
     planOptions: [
-      "Praticar uma pausa consciente antes de reagir.",
-      "Pedir feedback objetivo para uma pessoa de confiança.",
-      "Definir uma ação pequena para a competência com menor nota.",
-      "Registrar gatilhos emocionais por 7 dias.",
-      "Conversar com uma profissional para transformar o resultado em plano.",
+      "Fazer uma pausa antes de responder no impulso.",
+      "Conversar com alguém de confiança sobre esse ponto.",
+      "Escolher uma ação pequena para começar nesta semana.",
+      "Anotar por 7 dias o que mais mexe com meu emocional.",
+      "Buscar ajuda profissional para organizar os próximos passos.",
     ],
     result: function (scores) {
-      const entries = Object.entries(scores);
+      const entries = Object.entries(scores).filter(
+        ([, item]) => item && typeof item.value === "number",
+      );
       const avg = entries.reduce((sum, item) => sum + item[1].value, 0) / entries.length;
       const lowest = entries.sort((a, b) => a[1].value - b[1].value)[0];
       const area = lowest[1].label;
@@ -40,45 +45,48 @@ const TESTS = {
         avg >= 8
           ? "Boa sustentação emocional"
           : avg >= 6
-            ? "Emocional em reorganização"
-            : "Pedido claro de cuidado";
+            ? "Você está em fase de ajuste"
+            : "Seu emocional pede mais cuidado";
       return {
         title,
         score: Math.round(avg * 10),
         summary:
           avg >= 8
-            ? "Seu resultado mostra bons recursos internos. O próximo passo é manter rotina, limites e espaços de elaboração."
+            ? "Seu resultado mostra que você tem bons recursos para lidar com a rotina. O próximo passo é manter o cuidado."
             : avg >= 6
-              ? "Há áreas funcionando bem, mas também sinais de sobrecarga. Um plano simples pode ajudar a recuperar direção."
-              : "O resultado sugere que sua base emocional pede acolhimento e acompanhamento mais próximo neste ciclo.",
-        focus: "Área que mais pede atenção: " + area + ".",
+              ? "Algumas áreas estão bem, mas outras podem estar pesando. Um passo simples já pode ajudar."
+              : "Seu resultado mostra sinais de desgaste. Vale olhar para isso com carinho e buscar apoio se fizer sentido.",
+        focus: "Ponto que mais pede cuidado: " + area + ".",
         actions: scores.__plan || this.planOptions.slice(0, 3),
       };
     },
   },
   "projecao-de-vida": {
     title: "Projeção de Vida",
-    eyebrow: "Direção e metas",
+    landingTitle: "Ganhe clareza sobre seus próximos passos",
+    landingIntro:
+      "Responda ao formulário e veja se sua rotina, suas escolhas e seus planos estão caminhando na direção da vida que você quer construir.",
+    eyebrow: "Planos e próximos passos",
     intro:
-      "Entenda se suas escolhas atuais estão alinhadas com a vida que você quer construir.",
-    scale: ["Nada alinhado", "Pouco", "Parcial", "Alinhado", "Muito alinhado"],
+      "Veja se sua rotina combina com a vida que você quer construir.",
+    scale: ["Nada", "Pouco", "Mais ou menos", "Bem", "Muito"],
     dimensions: {
-      visao: "Visão de futuro",
-      prioridades: "Prioridades",
+      visao: "Clareza sobre o futuro",
+      prioridades: "O que é importante",
       rotina: "Rotina",
       coragem: "Coragem de agir",
       suporte: "Rede de suporte",
     },
     questions: [
-      ["visao", "Tenho clareza sobre o que quero construir nos próximos meses."],
-      ["prioridades", "Minhas escolhas da semana refletem o que digo que importa."],
-      ["rotina", "Minha rotina comporta meus objetivos sem me destruir."],
-      ["coragem", "Dou passos mesmo quando ainda não tenho certeza total."],
-      ["suporte", "Tenho pessoas ou recursos que sustentam meu processo."],
-      ["visao", "Consigo imaginar uma versão possível e realista do meu futuro."],
-      ["prioridades", "Sei diferenciar urgência de prioridade."],
-      ["rotina", "Consigo transformar intenção em agenda."],
-      ["coragem", "Aceito ajustar a rota sem abandonar o objetivo."],
+      ["visao", "Sei o que quero melhorar na minha vida nos próximos meses."],
+      ["prioridades", "Minhas escolhas mostram o que é importante para mim."],
+      ["rotina", "Minha rotina ajuda, e não atrapalha, meus objetivos."],
+      ["coragem", "Dou pequenos passos mesmo quando tenho medo."],
+      ["suporte", "Tenho pessoas ou recursos que me ajudam."],
+      ["visao", "Consigo imaginar um futuro possível para mim."],
+      ["prioridades", "Sei separar o que é urgente do que é importante."],
+      ["rotina", "Consigo colocar minhas ideias em prática."],
+      ["coragem", "Consigo mudar a rota sem desistir do que quero."],
       ["suporte", "Peço ajuda quando percebo que estou travando."],
     ],
     result: function (scores) {
@@ -91,48 +99,51 @@ const TESTS = {
           avg >= 4
             ? "Caminho bem direcionado"
             : avg >= 3
-              ? "Potencial com ajustes de rota"
-              : "Futuro pedindo reconexão",
+              ? "Você tem caminho, mas precisa ajustar"
+              : "É hora de se reconectar com seus planos",
         score: Math.round(avg * 20),
         summary:
           avg >= 4
-            ? "Você demonstra boa leitura de futuro e capacidade de transformar desejo em movimento."
+            ? "Você já tem clareza e consegue transformar planos em atitude."
             : avg >= 3
-              ? "Existe desejo e algum movimento, mas alguns pontos precisam sair do campo mental e ganhar estrutura."
-              : "Seu resultado sugere distanciamento entre desejo, rotina e energia disponível. Recomeçar pequeno pode ser decisivo.",
-        focus: "Ponto de ajuste: " + this.dimensions[weakest[0]] + ".",
+              ? "Você tem vontade e alguns movimentos, mas precisa organizar melhor os próximos passos."
+              : "Talvez exista distância entre o que você quer e o que sua rotina permite hoje. Começar pequeno pode ajudar.",
+        focus: "Ponto para ajustar: " + this.dimensions[weakest[0]] + ".",
         actions: [
-          "Defina uma meta de 30 dias, não uma meta de vida inteira.",
-          "Quebre a meta em uma ação de 20 minutos.",
-          "Revise o que precisa ser pausado para abrir espaço ao novo.",
+          "Escolha uma meta simples para os próximos 30 dias.",
+          "Transforme essa meta em uma ação de 20 minutos.",
+          "Veja o que precisa sair da rotina para abrir espaço.",
         ],
       };
     },
   },
   disc: {
     title: "Perfil DISC",
-    eyebrow: "Comportamento e comunicação",
+    landingTitle: "Entenda melhor seu jeito de agir",
+    landingIntro:
+      "Responda a perguntas rápidas e descubra pontos fortes do seu comportamento, oportunidades de desenvolvimento e formas de se comunicar melhor.",
+    eyebrow: "Seu jeito de agir",
     intro:
-      "Identifique tendências de decisão, comunicação, ritmo e relação com regras.",
+      "Entenda seu jeito mais comum de decidir, conversar e lidar com desafios.",
     choices: [
-      ["D", "Decido rápido e enfrento problemas de frente."],
-      ["I", "Conecto pessoas e influencio pelo entusiasmo."],
-      ["S", "Busco estabilidade, escuta e cooperação."],
-      ["C", "Analiso detalhes, critérios e riscos antes de agir."],
+      ["D", "Eu gosto de resolver logo e ir direto ao ponto."],
+      ["I", "Eu gosto de conversar, animar e conectar pessoas."],
+      ["S", "Eu gosto de calma, segurança e cooperação."],
+      ["C", "Eu gosto de pensar bem antes de agir."],
     ],
     questions: [
-      "Quando surge um desafio, minha primeira tendência é:",
-      "Em reuniões, costumo contribuir mais quando posso:",
-      "Sob pressão, normalmente eu:",
-      "Quando alguém discorda de mim, tendo a:",
-      "Meu ambiente ideal de trabalho valoriza:",
+      "Quando aparece um problema, eu costumo:",
+      "Em conversas em grupo, eu me sinto melhor quando posso:",
+      "Quando estou sob pressão, eu geralmente:",
+      "Quando alguém discorda de mim, eu costumo:",
+      "Eu gosto mais de ambientes que valorizam:",
       "Para confiar em uma decisão, eu preciso de:",
-      "Quando lidero uma tarefa, meu foco principal é:",
-      "Em mudanças inesperadas, eu costumo:",
-      "Recebo melhor um feedback quando ele vem com:",
-      "Minha forma natural de motivar pessoas é:",
+      "Quando estou à frente de uma tarefa, meu foco é:",
+      "Quando algo muda de repente, eu costumo:",
+      "Eu recebo melhor uma opinião quando ela vem com:",
+      "Meu jeito mais natural de motivar pessoas é:",
       "Antes de começar algo importante, eu prefiro:",
-      "Quando o grupo perde ritmo, eu tendo a:",
+      "Quando o grupo perde ritmo, eu costumo:",
     ],
     result: function (scores) {
       const labels = {
@@ -142,10 +153,10 @@ const TESTS = {
         C: "Conformidade",
       };
       const descriptions = {
-        D: "Você tende a ser direta, objetiva e orientada a resultado. Funciona bem com autonomia e metas claras.",
-        I: "Você tende a criar conexões, comunicar ideias e movimentar ambientes pelo entusiasmo.",
-        S: "Você tende a sustentar vínculos, escutar pessoas e buscar segurança nas mudanças.",
-        C: "Você tende a analisar critérios, qualidade e riscos antes de avançar.",
+        D: "Você tende a ser uma pessoa direta, prática e focada em resolver.",
+        I: "Você tende a se comunicar bem, criar conexões e animar o ambiente.",
+        S: "Você tende a ser uma pessoa calma, cuidadosa e boa para cooperar.",
+        C: "Você tende a observar detalhes, pensar antes de agir e buscar segurança.",
       };
       const ordered = Object.entries(scores).sort((a, b) => b[1].total - a[1].total);
       const top = ordered[0][0];
@@ -154,44 +165,47 @@ const TESTS = {
         title: "Predominância " + labels[top],
         score: Math.round((ordered[0][1].total / this.questions.length) * 100),
         summary: descriptions[top],
-        focus: "Combinação secundária: " + labels[second] + ".",
+        focus: "Seu segundo jeito mais forte: " + labels[second] + ".",
         actions: [
-          "Observe como seu perfil aparece sob pressão.",
-          "Ajuste sua comunicação ao perfil de quem recebe a mensagem.",
-          "Use este resultado como ponto de conversa, não como rótulo fixo.",
+          "Observe como você age quando está sob pressão.",
+          "Tente adaptar sua fala para quem está ouvindo.",
+          "Use este resultado como reflexão, não como rótulo fixo.",
         ],
       };
     },
   },
   "big-five": {
     title: "Big Five",
-    eyebrow: "Traços de personalidade",
+    landingTitle: "Conheça melhor seu jeito de ser",
+    landingIntro:
+      "Responda ao teste e receba uma leitura simples sobre suas características mais fortes, seus pontos de atenção e recomendações personalizadas.",
+    eyebrow: "Seu jeito de ser",
     intro:
-      "Uma leitura inicial dos cinco grandes fatores: abertura, consciência, extroversão, amabilidade e neuroticismo.",
-    scale: ["Discordo muito", "Discordo", "Neutro", "Concordo", "Concordo muito"],
+      "Veja quais características aparecem com mais força no seu momento atual.",
+    scale: ["Discordo muito", "Discordo", "Não sei", "Concordo", "Concordo muito"],
     dimensions: {
-      O: "Abertura",
-      C: "Consciência",
-      E: "Extroversão",
-      A: "Amabilidade",
-      N: "Sensibilidade emocional",
+      O: "Abertura a novidades",
+      C: "Organização",
+      E: "Energia social",
+      A: "Cuidado com o outro",
+      N: "Emoções intensas",
     },
     questions: [
-      ["O", "Gosto de explorar ideias, experiências e formas novas de ver a vida."],
+      ["O", "Gosto de conhecer ideias e experiências novas."],
       ["C", "Costumo me organizar para cumprir o que prometo."],
-      ["E", "Sinto energia ao interagir com pessoas."],
-      ["A", "Tenho facilidade em considerar necessidades dos outros."],
-      ["N", "Minhas emoções ficam intensas com facilidade."],
+      ["E", "Fico com mais energia quando estou com pessoas."],
+      ["A", "Costumo pensar em como minhas atitudes afetam os outros."],
+      ["N", "Minhas emoções ficam fortes com facilidade."],
       ["O", "Prefiro rotinas sempre iguais.", true],
       ["C", "Deixo tarefas importantes para a última hora.", true],
-      ["E", "Preciso de longos períodos sozinha para me recuperar.", true],
-      ["A", "Sou competitiva a ponto de ignorar o impacto nos outros.", true],
-      ["N", "Mantenho calma mesmo em situações de tensão.", true],
+      ["E", "Preciso de muito tempo sozinha para recuperar energia.", true],
+      ["A", "Às vezes quero vencer mesmo que isso afete outras pessoas.", true],
+      ["N", "Consigo manter a calma em situações difíceis.", true],
       ["O", "Aprender algo novo me renova."],
-      ["C", "Tenho disciplina para transformar planos em prática."],
-      ["E", "Costumo me expressar com facilidade em grupos."],
+      ["C", "Tenho disciplina para colocar planos em prática."],
+      ["E", "Costumo falar com facilidade em grupos."],
       ["A", "Escuto antes de concluir."],
-      ["N", "Preocupações pequenas podem ocupar muito espaço mental."],
+      ["N", "Pequenas preocupações podem ocupar muito espaço na minha cabeça."],
     ],
     result: function (scores) {
       const ordered = Object.entries(scores).sort((a, b) => b[1].avg - a[1].avg);
@@ -201,18 +215,18 @@ const TESTS = {
         Object.values(scores).reduce((sum, item) => sum + item.avg, 0) /
         Object.values(scores).length;
       return {
-        title: "Traço mais evidente: " + high,
+        title: "Característica mais forte: " + high,
         score: Math.round(avg * 20),
         summary:
-          "Seu mapa mostra quais tendências aparecem com mais força agora. Isso ajuda a entender energia, relações, organização e respostas emocionais.",
+          "Seu resultado mostra quais características aparecem com mais força agora. Isso ajuda a entender seu jeito de agir, se relacionar e lidar com emoções.",
         focus:
           top === "N"
-            ? "Sensibilidade emocional alta pede estratégias de regulação e descanso."
+            ? "Emoções intensas pedem mais descanso, pausa e cuidado."
             : high + " aparece como uma força importante no seu perfil.",
         actions: [
           "Leia o resultado como um retrato do momento.",
-          "Observe onde o traço vira potência e onde vira excesso.",
-          "Use a devolutiva profissional para transformar insight em plano.",
+          "Observe quando essa característica ajuda e quando atrapalha.",
+          "Use uma conversa profissional para transformar percepção em ação.",
         ],
       };
     },
@@ -299,6 +313,15 @@ function saveLeadToSheet(payload) {
   }).catch(() => {});
 }
 
+function scrollMobileToElement(element) {
+  if (!element || !window.matchMedia("(max-width: 767px)").matches) return;
+
+  window.requestAnimationFrame(() => {
+    const top = element.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  });
+}
+
 function initWheelTestPage(test, elements) {
   const {
     form,
@@ -358,7 +381,7 @@ function initWheelTestPage(test, elements) {
       <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div class="rounded-2xl bg-[#f8f4ff] p-5 ring-1 ring-[#e7def2]">
           <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-[#8052c6]">Como responder</p>
-          <p class="mt-3 leading-7 text-[#526079]">Avalie cada competência de 1 a 10. No celular, use os controles abaixo; o gráfico é apenas uma prévia do resultado.</p>
+          <p class="mt-3 leading-7 text-[#526079]">Dê uma nota de 1 a 10 para cada ponto. No celular, use os controles abaixo; o gráfico é apenas uma prévia do resultado.</p>
           <div data-wheel-preview class="mt-5"></div>
         </div>
         <div class="grid gap-5">
@@ -387,7 +410,10 @@ function initWheelTestPage(test, elements) {
         updateWheelPreview();
       });
     });
-    qs("[data-wheel-next]", stage).addEventListener("click", renderPlan);
+    qs("[data-wheel-next]", stage).addEventListener("click", () => {
+      renderPlan();
+      scrollMobileToElement(form);
+    });
   }
 
   function renderSlider(key, label, color) {
@@ -460,7 +486,10 @@ function initWheelTestPage(test, elements) {
         }
       });
     });
-    qs("[data-wheel-back]", stage).addEventListener("click", renderAssessment);
+    qs("[data-wheel-back]", stage).addEventListener("click", () => {
+      renderAssessment();
+      scrollMobileToElement(form);
+    });
     qs("[data-wheel-finish]", stage).addEventListener("click", finishWheel);
   }
 
@@ -555,7 +584,7 @@ function initWheelTestPage(test, elements) {
         <a class="btn inline-flex items-center justify-center rounded-2xl bg-white px-6 py-4 text-sm font-extrabold text-[#223873] ring-1 ring-[#e6ddec]" href="${CHRISTYE_WHATSAPP}&text=${encodeURIComponent(
           "Olá, sou " +
             name +
-            " e fiz a " +
+            ". Fiz a " +
             test.title +
             ". Meu WhatsApp é " +
             phone +
@@ -563,8 +592,8 @@ function initWheelTestPage(test, elements) {
             result.title +
             " (" +
             result.score +
-            "/100).",
-        )}" target="_blank" rel="noopener noreferrer">Enviar para Christye</a>
+            "/100). Quero tirar uma dúvida com uma profissional sobre meu resultado.",
+        )}" target="_blank" rel="noopener noreferrer">Tirar dúvida com profissional</a>
       </div>`;
 
     qs("[data-share-result]", resultCard).addEventListener("click", () =>
@@ -655,10 +684,35 @@ function initTestPage() {
   let currentIndex = 0;
   const answers = new Array((test.questions || []).length).fill(null);
 
-  title.textContent = test.title;
-  intro.textContent = test.intro;
-  eyebrow.textContent = test.eyebrow;
+  document.body.classList.add("test-intro-mode");
+  title.textContent = test.landingTitle || "Ganhe uma análise gratuita";
+  intro.textContent =
+    test.landingIntro ||
+    "Responda ao formulário e descubra seus pontos fortes, oportunidades de desenvolvimento e recomendações personalizadas.";
+  eyebrow.textContent = test.title;
   document.title = test.title + " | Christye Biagio";
+  const startControls = document.createElement("div");
+  startControls.className = "mt-8 flex flex-col gap-3 sm:flex-row";
+  startControls.innerHTML = `
+    <button type="button" data-start-test class="btn inline-flex items-center justify-center rounded-2xl bg-[#8052c6] px-7 py-4 text-base font-extrabold text-white">
+      Vamos começar
+    </button>
+    <a href="/" class="btn inline-flex items-center justify-center rounded-2xl bg-white px-7 py-4 text-base font-extrabold text-[#223873] ring-1 ring-[#e6ddec]">
+      Voltar para o site
+    </a>`;
+  intro.insertAdjacentElement("afterend", startControls);
+
+  qs("[data-start-test]", startControls).addEventListener("click", () => {
+    document.body.classList.remove("test-intro-mode");
+    title.textContent = test.title;
+    intro.textContent = test.intro;
+    eyebrow.textContent = test.eyebrow;
+    startControls.classList.add("hidden");
+    scrollMobileToElement(form);
+    if (!window.matchMedia("(max-width: 767px)").matches) {
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
 
   if (test.mode === "wheel") {
     initWheelTestPage(test, {
@@ -798,6 +852,7 @@ function initTestPage() {
         if (currentIndex === indexAtSelection && answers[currentIndex] !== null) {
           currentIndex += 1;
           renderQuestion();
+          scrollMobileToElement(form);
         }
       }, 260);
     }
@@ -807,6 +862,7 @@ function initTestPage() {
     if (currentIndex === 0) return;
     currentIndex -= 1;
     renderQuestion();
+    scrollMobileToElement(form);
   });
 
   nextButton.addEventListener("click", () => {
@@ -827,6 +883,7 @@ function initTestPage() {
     if (currentIndex < test.questions.length - 1) {
       currentIndex += 1;
       renderQuestion();
+      scrollMobileToElement(form);
       return;
     }
 
@@ -886,6 +943,7 @@ function initTestPage() {
       const firstMissing = answers.findIndex((value) => value === null);
       currentIndex = firstMissing;
       renderQuestion();
+      scrollMobileToElement(form);
       helper.textContent = "Responda esta pergunta para liberar o resultado.";
       return;
     }
@@ -965,7 +1023,7 @@ function initTestPage() {
         <a class="btn inline-flex items-center justify-center rounded-2xl bg-white px-6 py-4 text-sm font-extrabold text-[#223873] ring-1 ring-[#e6ddec]" href="${CHRISTYE_WHATSAPP}&text=${encodeURIComponent(
           "Olá, sou " +
             name +
-            " e fiz o teste " +
+            ". Fiz o teste " +
             test.title +
             ". Meu WhatsApp é " +
             phone +
@@ -973,8 +1031,8 @@ function initTestPage() {
             result.title +
             " (" +
             result.score +
-            "/100).",
-        )}" target="_blank" rel="noopener noreferrer">Enviar para Christye</a>
+            "/100). Quero tirar uma dúvida com uma profissional sobre meu resultado.",
+        )}" target="_blank" rel="noopener noreferrer">Tirar dúvida com profissional</a>
       </div>`;
 
     qs("[data-share-result]", resultCard).addEventListener("click", () =>

@@ -119,6 +119,30 @@ body {
   transition: width 0.25s ease;
 }
 
+.test-page.test-intro-mode .test-shell {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 7rem;
+  padding-bottom: 2rem;
+}
+
+.test-page.test-intro-mode #test-form,
+.test-page.test-intro-mode #loading-state,
+.test-page.test-intro-mode #result-section,
+.test-page.test-intro-mode [data-progress] {
+  display: none;
+}
+
+.test-page.test-intro-mode aside {
+  display: none;
+}
+
+.test-page.test-intro-mode [data-test-title] {
+  max-width: 56rem;
+}
+
 .wheel-slider {
   border-left: 4px solid var(--wheel-color);
 }
