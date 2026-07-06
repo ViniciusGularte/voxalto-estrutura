@@ -4,29 +4,29 @@ const CHRISTYE_WHATSAPP =
 const TESTS = {
   "roda-emocional": {
     title: "Roda Emocional",
-    eyebrow: "Autopercepcao emocional",
+    eyebrow: "Autopercepção emocional",
     intro:
-      "Mapeie como estao as principais areas da sua vida emocional neste momento.",
-    scale: ["Muito baixo", "Baixo", "Medio", "Bom", "Muito bom"],
+      "Mapeie como estão as principais áreas da sua vida emocional neste momento.",
+    scale: ["Muito baixo", "Baixo", "Médio", "Bom", "Muito bom"],
     dimensions: {
       energia: "Energia",
       clareza: "Clareza mental",
       limites: "Limites",
-      relacoes: "Relacoes",
+      relacoes: "Relações",
       descanso: "Descanso",
       autoestima: "Autoestima",
-      proposito: "Proposito",
-      regulacao: "Regulacao emocional",
+      proposito: "Propósito",
+      regulacao: "Regulação emocional",
     },
     questions: [
       ["energia", "Tenho energia emocional para cumprir minha rotina."],
-      ["clareza", "Consigo organizar pensamentos antes de tomar decisoes."],
-      ["limites", "Consigo dizer nao quando algo ultrapassa meus limites."],
-      ["relacoes", "Minhas relacoes me trazem seguranca e apoio."],
+      ["clareza", "Consigo organizar pensamentos antes de tomar decisões."],
+      ["limites", "Consigo dizer não quando algo ultrapassa meus limites."],
+      ["relacoes", "Minhas relações me trazem segurança e apoio."],
       ["descanso", "Tenho pausas reais para recuperar corpo e mente."],
-      ["autoestima", "Reconheco meu valor mesmo quando erro."],
-      ["proposito", "Sinto direcao nas escolhas que estou fazendo."],
-      ["regulacao", "Consigo lidar com emocoes intensas sem me perder nelas."],
+      ["autoestima", "Reconheço meu valor mesmo quando erro."],
+      ["proposito", "Sinto direção nas escolhas que estou fazendo."],
+      ["regulacao", "Consigo lidar com emoções intensas sem me perder nelas."],
     ],
     result: function (scores) {
       const entries = Object.entries(scores);
@@ -36,52 +36,52 @@ const TESTS = {
       const area = this.dimensions[lowest[0]];
       const title =
         avg >= 4
-          ? "Boa sustentacao emocional"
+          ? "Boa sustentação emocional"
           : avg >= 3
-            ? "Emocional em reorganizacao"
+            ? "Emocional em reorganização"
             : "Pedido claro de cuidado";
       return {
         title,
         score: Math.round(avg * 20),
         summary:
           avg >= 4
-            ? "Seu resultado mostra bons recursos internos. O proximo passo e manter rotina, limites e espacos de elaboracao."
+            ? "Seu resultado mostra bons recursos internos. O próximo passo é manter rotina, limites e espaços de elaboração."
             : avg >= 3
-              ? "Ha areas funcionando bem, mas tambem sinais de sobrecarga. Um plano simples pode ajudar a recuperar direcao."
-              : "O resultado sugere que sua base emocional pede acolhimento e acompanhamento mais proximo neste ciclo.",
-        focus: "Area que mais pede atencao: " + area + ".",
+              ? "Há áreas funcionando bem, mas também sinais de sobrecarga. Um plano simples pode ajudar a recuperar direção."
+              : "O resultado sugere que sua base emocional pede acolhimento e acompanhamento mais próximo neste ciclo.",
+        focus: "Área que mais pede atenção: " + area + ".",
         actions: [
-          "Escolha uma pausa concreta para os proximos 7 dias.",
-          "Nomeie a emocao dominante antes de reagir.",
+          "Escolha uma pausa concreta para os próximos 7 dias.",
+          "Nomeie a emoção dominante antes de reagir.",
           "Converse com uma profissional se o desgaste estiver recorrente.",
         ],
       };
     },
   },
   "projecao-de-vida": {
-    title: "Projecao de Vida",
-    eyebrow: "Direcao e metas",
+    title: "Projeção de Vida",
+    eyebrow: "Direção e metas",
     intro:
-      "Entenda se suas escolhas atuais estao alinhadas com a vida que voce quer construir.",
+      "Entenda se suas escolhas atuais estão alinhadas com a vida que você quer construir.",
     scale: ["Nada alinhado", "Pouco", "Parcial", "Alinhado", "Muito alinhado"],
     dimensions: {
-      visao: "Visao de futuro",
+      visao: "Visão de futuro",
       prioridades: "Prioridades",
       rotina: "Rotina",
       coragem: "Coragem de agir",
       suporte: "Rede de suporte",
     },
     questions: [
-      ["visao", "Tenho clareza sobre o que quero construir nos proximos meses."],
+      ["visao", "Tenho clareza sobre o que quero construir nos próximos meses."],
       ["prioridades", "Minhas escolhas da semana refletem o que digo que importa."],
       ["rotina", "Minha rotina comporta meus objetivos sem me destruir."],
-      ["coragem", "Dou passos mesmo quando ainda nao tenho certeza total."],
+      ["coragem", "Dou passos mesmo quando ainda não tenho certeza total."],
       ["suporte", "Tenho pessoas ou recursos que sustentam meu processo."],
-      ["visao", "Consigo imaginar uma versao possivel e realista do meu futuro."],
-      ["prioridades", "Sei diferenciar urgencia de prioridade."],
-      ["rotina", "Consigo transformar intencao em agenda."],
+      ["visao", "Consigo imaginar uma versão possível e realista do meu futuro."],
+      ["prioridades", "Sei diferenciar urgência de prioridade."],
+      ["rotina", "Consigo transformar intenção em agenda."],
       ["coragem", "Aceito ajustar a rota sem abandonar o objetivo."],
-      ["suporte", "Peco ajuda quando percebo que estou travando."],
+      ["suporte", "Peço ajuda quando percebo que estou travando."],
     ],
     result: function (scores) {
       const avg =
@@ -94,106 +94,106 @@ const TESTS = {
             ? "Caminho bem direcionado"
             : avg >= 3
               ? "Potencial com ajustes de rota"
-              : "Futuro pedindo reconexao",
+              : "Futuro pedindo reconexão",
         score: Math.round(avg * 20),
         summary:
           avg >= 4
-            ? "Voce demonstra boa leitura de futuro e capacidade de transformar desejo em movimento."
+            ? "Você demonstra boa leitura de futuro e capacidade de transformar desejo em movimento."
             : avg >= 3
               ? "Existe desejo e algum movimento, mas alguns pontos precisam sair do campo mental e ganhar estrutura."
-              : "Seu resultado sugere distanciamento entre desejo, rotina e energia disponivel. Recomecar pequeno pode ser decisivo.",
+              : "Seu resultado sugere distanciamento entre desejo, rotina e energia disponível. Recomeçar pequeno pode ser decisivo.",
         focus: "Ponto de ajuste: " + this.dimensions[weakest[0]] + ".",
         actions: [
-          "Defina uma meta de 30 dias, nao uma meta de vida inteira.",
-          "Quebre a meta em uma acao de 20 minutos.",
-          "Revise o que precisa ser pausado para abrir espaco ao novo.",
+          "Defina uma meta de 30 dias, não uma meta de vida inteira.",
+          "Quebre a meta em uma ação de 20 minutos.",
+          "Revise o que precisa ser pausado para abrir espaço ao novo.",
         ],
       };
     },
   },
   disc: {
     title: "Perfil DISC",
-    eyebrow: "Comportamento e comunicacao",
+    eyebrow: "Comportamento e comunicação",
     intro:
-      "Identifique tendencias de decisao, comunicacao, ritmo e relacao com regras.",
+      "Identifique tendências de decisão, comunicação, ritmo e relação com regras.",
     choices: [
-      ["D", "Decido rapido e enfrento problemas de frente."],
+      ["D", "Decido rápido e enfrento problemas de frente."],
       ["I", "Conecto pessoas e influencio pelo entusiasmo."],
-      ["S", "Busco estabilidade, escuta e cooperacao."],
-      ["C", "Analiso detalhes, criterios e riscos antes de agir."],
+      ["S", "Busco estabilidade, escuta e cooperação."],
+      ["C", "Analiso detalhes, critérios e riscos antes de agir."],
     ],
     questions: [
-      "Quando surge um desafio, minha primeira tendencia e:",
-      "Em reunioes, costumo contribuir mais quando posso:",
-      "Sob pressao, normalmente eu:",
-      "Quando alguem discorda de mim, tendo a:",
+      "Quando surge um desafio, minha primeira tendência é:",
+      "Em reuniões, costumo contribuir mais quando posso:",
+      "Sob pressão, normalmente eu:",
+      "Quando alguém discorda de mim, tendo a:",
       "Meu ambiente ideal de trabalho valoriza:",
-      "Para confiar em uma decisao, eu preciso de:",
-      "Quando lidero uma tarefa, meu foco principal e:",
-      "Em mudancas inesperadas, eu costumo:",
+      "Para confiar em uma decisão, eu preciso de:",
+      "Quando lidero uma tarefa, meu foco principal é:",
+      "Em mudanças inesperadas, eu costumo:",
       "Recebo melhor um feedback quando ele vem com:",
-      "Minha forma natural de motivar pessoas e:",
-      "Antes de comecar algo importante, eu prefiro:",
+      "Minha forma natural de motivar pessoas é:",
+      "Antes de começar algo importante, eu prefiro:",
       "Quando o grupo perde ritmo, eu tendo a:",
     ],
     result: function (scores) {
       const labels = {
-        D: "Dominancia",
-        I: "Influencia",
+        D: "Dominância",
+        I: "Influência",
         S: "Estabilidade",
         C: "Conformidade",
       };
       const descriptions = {
-        D: "Voce tende a ser direta, objetiva e orientada a resultado. Funciona bem com autonomia e metas claras.",
-        I: "Voce tende a criar conexoes, comunicar ideias e movimentar ambientes pelo entusiasmo.",
-        S: "Voce tende a sustentar vinculos, escutar pessoas e buscar seguranca nas mudancas.",
-        C: "Voce tende a analisar criterios, qualidade e riscos antes de avancar.",
+        D: "Você tende a ser direta, objetiva e orientada a resultado. Funciona bem com autonomia e metas claras.",
+        I: "Você tende a criar conexões, comunicar ideias e movimentar ambientes pelo entusiasmo.",
+        S: "Você tende a sustentar vínculos, escutar pessoas e buscar segurança nas mudanças.",
+        C: "Você tende a analisar critérios, qualidade e riscos antes de avançar.",
       };
       const ordered = Object.entries(scores).sort((a, b) => b[1].total - a[1].total);
       const top = ordered[0][0];
       const second = ordered[1][0];
       return {
-        title: "Predominancia " + labels[top],
+        title: "Predominância " + labels[top],
         score: Math.round((ordered[0][1].total / this.questions.length) * 100),
         summary: descriptions[top],
-        focus: "Combinacao secundaria: " + labels[second] + ".",
+        focus: "Combinação secundária: " + labels[second] + ".",
         actions: [
-          "Observe como seu perfil aparece sob pressao.",
-          "Ajuste sua comunicacao ao perfil de quem recebe a mensagem.",
-          "Use este resultado como ponto de conversa, nao como rotulo fixo.",
+          "Observe como seu perfil aparece sob pressão.",
+          "Ajuste sua comunicação ao perfil de quem recebe a mensagem.",
+          "Use este resultado como ponto de conversa, não como rótulo fixo.",
         ],
       };
     },
   },
   "big-five": {
     title: "Big Five",
-    eyebrow: "Tracos de personalidade",
+    eyebrow: "Traços de personalidade",
     intro:
-      "Uma leitura inicial dos cinco grandes fatores: abertura, consciencia, extroversao, amabilidade e neuroticismo.",
+      "Uma leitura inicial dos cinco grandes fatores: abertura, consciência, extroversão, amabilidade e neuroticismo.",
     scale: ["Discordo muito", "Discordo", "Neutro", "Concordo", "Concordo muito"],
     dimensions: {
       O: "Abertura",
-      C: "Consciencia",
-      E: "Extroversao",
+      C: "Consciência",
+      E: "Extroversão",
       A: "Amabilidade",
       N: "Sensibilidade emocional",
     },
     questions: [
-      ["O", "Gosto de explorar ideias, experiencias e formas novas de ver a vida."],
+      ["O", "Gosto de explorar ideias, experiências e formas novas de ver a vida."],
       ["C", "Costumo me organizar para cumprir o que prometo."],
       ["E", "Sinto energia ao interagir com pessoas."],
       ["A", "Tenho facilidade em considerar necessidades dos outros."],
-      ["N", "Minhas emocoes ficam intensas com facilidade."],
+      ["N", "Minhas emoções ficam intensas com facilidade."],
       ["O", "Prefiro rotinas sempre iguais.", true],
-      ["C", "Deixo tarefas importantes para a ultima hora.", true],
-      ["E", "Preciso de longos periodos sozinha para me recuperar.", true],
+      ["C", "Deixo tarefas importantes para a última hora.", true],
+      ["E", "Preciso de longos períodos sozinha para me recuperar.", true],
       ["A", "Sou competitiva a ponto de ignorar o impacto nos outros.", true],
-      ["N", "Mantenho calma mesmo em situacoes de tensao.", true],
+      ["N", "Mantenho calma mesmo em situações de tensão.", true],
       ["O", "Aprender algo novo me renova."],
-      ["C", "Tenho disciplina para transformar planos em pratica."],
+      ["C", "Tenho disciplina para transformar planos em prática."],
       ["E", "Costumo me expressar com facilidade em grupos."],
       ["A", "Escuto antes de concluir."],
-      ["N", "Preocupacoes pequenas podem ocupar muito espaco mental."],
+      ["N", "Preocupações pequenas podem ocupar muito espaço mental."],
     ],
     result: function (scores) {
       const ordered = Object.entries(scores).sort((a, b) => b[1].avg - a[1].avg);
@@ -203,17 +203,17 @@ const TESTS = {
         Object.values(scores).reduce((sum, item) => sum + item.avg, 0) /
         Object.values(scores).length;
       return {
-        title: "Traco mais evidente: " + high,
+        title: "Traço mais evidente: " + high,
         score: Math.round(avg * 20),
         summary:
-          "Seu mapa mostra quais tendencias aparecem com mais forca agora. Isso ajuda a entender energia, relacoes, organizacao e respostas emocionais.",
+          "Seu mapa mostra quais tendências aparecem com mais força agora. Isso ajuda a entender energia, relações, organização e respostas emocionais.",
         focus:
           top === "N"
-            ? "Sensibilidade emocional alta pede estrategias de regulacao e descanso."
-            : high + " aparece como uma forca importante no seu perfil.",
+            ? "Sensibilidade emocional alta pede estratégias de regulação e descanso."
+            : high + " aparece como uma força importante no seu perfil.",
         actions: [
           "Leia o resultado como um retrato do momento.",
-          "Observe onde o traco vira potencia e onde vira excesso.",
+          "Observe onde o traço vira potência e onde vira excesso.",
           "Use a devolutiva profissional para transformar insight em plano.",
         ],
       };
@@ -405,10 +405,10 @@ function initTestPage() {
 
     helper.textContent =
       selected === null
-        ? "Escolha uma opcao para avancar."
+        ? "Escolha uma opção para avançar."
         : currentIndex === test.questions.length - 1
           ? "Tudo pronto para gerar seu resultado."
-          : "Opcao registrada. Voce pode continuar ou alterar.";
+          : "Opção registrada. Você pode continuar ou alterar.";
     previousButton.disabled = currentIndex === 0;
     previousButton.classList.toggle("opacity-45", currentIndex === 0);
     nextButton.textContent =
@@ -425,7 +425,7 @@ function initTestPage() {
     helper.textContent =
       currentIndex === test.questions.length - 1
         ? "Tudo pronto para gerar seu resultado."
-        : "Opcao registrada. Voce pode continuar ou alterar.";
+        : "Opção registrada. Você pode continuar ou alterar.";
     updateProgress();
 
     if (currentIndex < test.questions.length - 1) {
@@ -447,7 +447,7 @@ function initTestPage() {
 
   nextButton.addEventListener("click", () => {
     if (answers[currentIndex] === null) {
-      helper.textContent = "Marque uma opcao antes de continuar.";
+      helper.textContent = "Marque uma opção antes de continuar.";
       stage.animate(
         [
           { transform: "translateX(0)" },
@@ -554,7 +554,7 @@ function initTestPage() {
   function renderResult(name, phone) {
     const result = test.result(currentScores);
     const dimensions = renderDimensions(currentScores, test);
-    const shareText = `${name}, seu resultado no teste ${test.title}: ${result.title}. Pontuacao: ${result.score}/100. ${result.focus}`;
+    const shareText = `${name}, seu resultado no teste ${test.title}: ${result.title}. Pontuação: ${result.score}/100. ${result.focus}`;
     resultCard.innerHTML = `
       <div class="soft-shadow rounded-3xl border border-[#e6ddec] bg-white p-6 md:p-8" data-download-card>
         <p class="text-xs font-extrabold uppercase tracking-[0.24em] text-[#8052c6]">Resultado de ${name}</p>
@@ -583,11 +583,11 @@ function initTestPage() {
         <button type="button" data-share-result class="btn inline-flex items-center justify-center rounded-2xl bg-[#223873] px-6 py-4 text-sm font-extrabold text-white">Compartilhar</button>
         <button type="button" data-download-result class="btn inline-flex items-center justify-center rounded-2xl bg-[#8052c6] px-6 py-4 text-sm font-extrabold text-white">Baixar print</button>
         <a class="btn inline-flex items-center justify-center rounded-2xl bg-white px-6 py-4 text-sm font-extrabold text-[#223873] ring-1 ring-[#e6ddec]" href="${CHRISTYE_WHATSAPP}&text=${encodeURIComponent(
-          "Ola, sou " +
+          "Olá, sou " +
             name +
             " e fiz o teste " +
             test.title +
-            ". Meu WhatsApp e " +
+            ". Meu WhatsApp é " +
             phone +
             ". Resultado: " +
             result.title +
@@ -609,7 +609,7 @@ function initTestPage() {
       return `<div class="mt-7 grid gap-3 md:grid-cols-4">
         ${Object.entries(scores)
           .map(([key, data]) => {
-            const labels = { D: "Dominancia", I: "Influencia", S: "Estabilidade", C: "Conformidade" };
+            const labels = { D: "Dominância", I: "Influência", S: "Estabilidade", C: "Conformidade" };
             const pct = Math.round((data.total / total) * 100);
             return `<div class="rounded-2xl bg-white/80 p-4 ring-1 ring-[#e6ddec]">
               <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-[#8052c6]">${labels[key]}</p>
