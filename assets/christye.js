@@ -422,7 +422,11 @@ function initTestPage() {
     const input = event.target;
     if (!(input instanceof HTMLInputElement)) return;
     answers[currentIndex] = input.value;
-    renderQuestion();
+    helper.textContent =
+      currentIndex === test.questions.length - 1
+        ? "Tudo pronto para gerar seu resultado."
+        : "Opcao registrada. Voce pode continuar ou alterar.";
+    updateProgress();
 
     if (currentIndex < test.questions.length - 1) {
       const indexAtSelection = currentIndex;
