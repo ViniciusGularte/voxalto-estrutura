@@ -4,6 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "python3 -m http.server 3000",
+    "dev:vercel": "npx vercel dev",
+    "email:test": "node scripts/send-test-email.js",
     "build": "echo \"Static site ready\""
+  },
+  "dependencies": {
+    "resend": "^6.17.2"
   }
 }

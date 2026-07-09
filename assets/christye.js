@@ -1,14 +1,13 @@
 const CHRISTYE_WHATSAPP =
   "https://api.whatsapp.com/send/?phone=5519996527253&type=phone_number&app_absent=0";
-const GOOGLE_SHEETS_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbxx-4KdNMtTggWAFCGsXiO3YKmJFcox9UOqvzRH0DsxTJ6x72ganO9X-rWC7Ch6WBLU7w/exec";
+const RESULT_EMAIL_API_URL = "/api/send-result";
 
 const TESTS = {
   "roda-emocional": {
     title: "Roda Emocional",
     landingTitle: "Ganhe uma análise gratuita",
     landingIntro:
-      "Responda a uma avaliação simples e descubra quais pontos do seu emocional estão mais fortes, quais pedem cuidado e quais próximos passos podem ajudar.",
+      "A Roda Emocional é uma avaliação rápida para você olhar para o seu momento atual. Dê notas para pontos do dia a dia e veja onde você está bem, onde precisa de mais cuidado e quais próximos passos podem ajudar.",
     eyebrow: "Como está seu emocional hoje",
     intro:
       "Dê uma nota de 1 a 10 para cada ponto e veja quais áreas precisam de mais cuidado.",
@@ -65,7 +64,7 @@ const TESTS = {
     title: "Projeção de Vida",
     landingTitle: "Ganhe clareza sobre seus próximos passos",
     landingIntro:
-      "Responda ao formulário e veja se sua rotina, suas escolhas e seus planos estão caminhando na direção da vida que você quer construir.",
+      "Este teste ajuda você a olhar para seus planos, sua rotina e suas escolhas. No final, você recebe uma leitura simples sobre o que está funcionando e o que pode ser ajustado.",
     eyebrow: "Planos e próximos passos",
     intro:
       "Veja se sua rotina combina com a vida que você quer construir.",
@@ -121,7 +120,7 @@ const TESTS = {
     title: "Perfil DISC",
     landingTitle: "Entenda melhor seu jeito de agir",
     landingIntro:
-      "Responda a perguntas rápidas e descubra pontos fortes do seu comportamento, oportunidades de desenvolvimento e formas de se comunicar melhor.",
+      "O DISC mostra pistas sobre seu jeito de agir, decidir e se comunicar. Responda a perguntas simples e veja quais características aparecem com mais força em você.",
     eyebrow: "Seu jeito de agir",
     intro:
       "Entenda seu jeito mais comum de decidir, conversar e lidar com desafios.",
@@ -178,7 +177,7 @@ const TESTS = {
     title: "Big Five",
     landingTitle: "Conheça melhor seu jeito de ser",
     landingIntro:
-      "Responda ao teste e receba uma leitura simples sobre suas características mais fortes, seus pontos de atenção e recomendações personalizadas.",
+      "O Big Five é uma leitura inicial sobre cinco áreas do seu jeito de ser. Ele ajuda a perceber como você lida com novidades, organização, pessoas, relações e emoções.",
     eyebrow: "Seu jeito de ser",
     intro:
       "Veja quais características aparecem com mais força no seu momento atual.",
@@ -298,19 +297,71 @@ function normalizePhone(value) {
   return String(value || "").replace(/\D/g, "");
 }
 
-function saveLeadToSheet(payload) {
-  if (!GOOGLE_SHEETS_WEB_APP_URL) return Promise.resolve();
+function sendLeadResult(payload) {
+  if (!RESULT_EMAIL_API_URL) return Promise.resolve();
 
-  return fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+  return fetch(RESULT_EMAIL_API_URL, {
     method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       createdAt: new Date().toISOString(),
       page: window.location.pathname,
       ...payload,
     }),
   }).catch(() => {});
+}
+
+function getQuestionText(question) {
+  return Array.isArray(question) ? question[1] : question;
+}
+
+function getAnswerLabel(test, question, answer) {
+  if (test.choices) {
+    const choice = test.choices.find(([value]) => value === answer);
+    return choice ? choice[1] : answer;
+  }
+
+  if (test.scale) {
+    return test.scale[Number(answer) - 1] || answer;
+  }
+
+  return answer;
+}
+
+function buildScoreDetails(test, scores) {
+  if (!scores) return [];
+
+  if (test.mode === "wheel") {
+    return Object.values(scores)
+      .filter((item) => item && item.label)
+      .map((item) => ({
+        label: item.label,
+        group: item.group,
+        value: `${item.value}/10`,
+      }));
+  }
+
+  if (test.choices) {
+    const labels = {
+      D: "Dominância",
+      I: "Influência",
+      S: "Estabilidade",
+      C: "Conformidade",
+    };
+    const total = test.questions.length;
+
+    return Object.entries(scores).map(([key, data]) => ({
+      label: labels[key] || key,
+      value: `${data.total} respostas`,
+      percent: `${Math.round((data.total / total) * 100)}%`,
+    }));
+  }
+
+  return Object.entries(scores).map(([key, data]) => ({
+    label: test.dimensions[key] || key,
+    value: `${Math.round(data.avg * 20)}%`,
+    average: `${data.avg.toFixed(1)}/5`,
+  }));
 }
 
 function scrollMobileToElement(element) {
@@ -528,15 +579,18 @@ function initWheelTestPage(test, elements) {
     }
 
     const result = test.result(currentScores);
-    saveLeadToSheet({
+    sendLeadResult({
       testId,
       testTitle: test.title,
       name,
       phone,
       resultTitle: result.title,
+      resultSummary: result.summary,
       score: result.score,
       focus: result.focus,
       plan: currentScores.__plan,
+      actions: result.actions,
+      scoreDetails: buildScoreDetails(test, currentScores),
       scores: currentScores,
     });
 
@@ -962,18 +1016,22 @@ function initTestPage() {
     }
 
     const result = test.result(currentScores);
-    saveLeadToSheet({
+    sendLeadResult({
       testId,
       testTitle: test.title,
       name,
       phone,
       resultTitle: result.title,
+      resultSummary: result.summary,
       score: result.score,
       focus: result.focus,
+      actions: result.actions,
+      scoreDetails: buildScoreDetails(test, currentScores),
       scores: currentScores,
       answers: answers.map((answer, index) => ({
-        question: questionText(test.questions[index]),
+        question: getQuestionText(test.questions[index]),
         answer,
+        answerLabel: getAnswerLabel(test, test.questions[index], answer),
       })),
     });
 
